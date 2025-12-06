@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MindHaven Stories — Journeys of Hope</title>
 
+    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* ================= THEME VARIABLES ================= */
         :root {
             --teal-500: #26a69a;
             --teal-400: #4db6ac;
@@ -32,130 +34,465 @@
             background: var(--bg-light);
             color: var(--text);
             line-height: 1.6;
-            padding-top: 80px; /* Space for fixed navbar */
+            padding-top: 80px;
         }
 
-        a { text-decoration: none; color: inherit; }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-        /* ================= NAVBAR (BOOTSTRAP OVERRIDE) ================= */
+        /* NAVBAR */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
-        .navbar-brand { font-weight: 700; color: #26a69a !important; font-size: 1.5rem; }
-        .nav-link { color: #555 !important; font-weight: 500; margin: 0 10px; transition: color 0.3s; position: relative;}
-        .nav-link:hover { color: #26a69a !important; }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #26a69a !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #26a69a !important;
+        }
+
         .btn-teal {
-            background-color: #26a69a; color: white; font-weight: 600;
-            border-radius: 50px; padding: 8px 25px; border: none; transition: all 0.3s ease;
+            background-color: #26a69a;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 8px 25px;
+            border: none;
+            transition: all 0.3s ease;
         }
-        .btn-teal:hover { background-color: #4db6ac; color: white; transform: translateY(-2px); }
 
-        /* ================= HERO SECTION ================= */
-        .hero { padding: 40px 16px 20px; }
+        .btn-teal:hover {
+            background-color: #4db6ac;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* HERO */
+        .hero {
+            padding: 40px 16px 20px;
+        }
+
         .hero-inner {
-            max-width: 1080px; margin: 0 auto; display: grid;
+            max-width: 1080px;
+            margin: 0 auto;
+            display: grid;
             grid-template-columns: minmax(0, 2fr) minmax(0, 1.6fr);
-            gap: 32px; align-items: center;
+            gap: 32px;
+            align-items: center;
         }
-        @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; } }
 
-        .hero-copy h1 { font-size: clamp(2.1rem, 2.7vw, 2.8rem); color: var(--text-strong); margin: 0 0 10px; }
-        .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-        .pill { border-radius: 999px; padding: 4px 10px; font-size: 0.8rem; background: rgba(148, 163, 184, 0.18); }
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+        }
 
-        /* Glass Card */
+        .hero-copy h1 {
+            font-size: clamp(2.1rem, 2.7vw, 2.8rem);
+            color: var(--text-strong);
+            margin: 0 0 10px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .pill {
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            background: rgba(148, 163, 184, 0.18);
+        }
+
         .glass-card {
-            border-radius: var(--radius-xl); padding: 20px;
-            background: var(--surface); box-shadow: var(--shadow-soft);
-            backdrop-filter: blur(18px); border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            background: var(--surface);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
             transition: var(--transition);
         }
-        .glass-card:hover { transform: translateY(-4px); }
 
-        .hero-person { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+        .glass-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .hero-person {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
         .avatar {
-            width: 40px; height: 40px; border-radius: 50%;
-            display: grid; place-items: center; font-weight: 600; color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-weight: 600;
+            color: #fff;
             background: linear-gradient(135deg, var(--teal-500), var(--purple-500));
         }
 
-        /* ================= CONTROLS & SEARCH ================= */
-        .controls-section { padding: 20px 16px 0; }
-        .controls-inner {
-            max-width: 1080px; margin: 0 auto; display: grid;
-            grid-template-columns: minmax(0, 2.4fr) minmax(0, 2fr);
-            gap: 22px; align-items: flex-end;
+        /* SEARCH / FILTER */
+        .controls-section {
+            padding: 20px 16px 10px;
         }
-        @media (max-width: 900px) { .controls-inner { grid-template-columns: 1fr; } }
+
+        .controls-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 2.4fr) minmax(0, 2fr);
+            gap: 22px;
+            align-items: flex-end;
+        }
+
+        @media (max-width: 900px) {
+            .controls-inner {
+                grid-template-columns: 1fr;
+            }
+        }
 
         .search-input-wrap {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(255, 255, 255, 0.86); border-radius: 999px;
-            padding: 10px 15px; box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.86);
+            border-radius: 999px;
+            padding: 10px 15px;
+            box-shadow: var(--shadow-soft);
         }
-        .search-input-wrap input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.9rem; }
 
-        .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .search-input-wrap input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
         .chip {
-            border-radius: 999px; border: none; padding: 6px 12px; font-size: 0.8rem;
-            background: rgba(148, 163, 184, 0.16); cursor: pointer; transition: var(--transition);
+            border-radius: 999px;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            background: rgba(148, 163, 184, 0.16);
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .chip.chip-active, .chip:hover { background: var(--teal-500); color: #fff; }
 
-        /* ================= STORIES GRID ================= */
-        .stories-section { padding: 30px 16px 40px; }
+        .chip.chip-active,
+        .chip:hover {
+            background: var(--teal-500);
+            color: #fff;
+        }
+
+        /* POST BOX */
+        .post-section {
+            padding: 10px 16px 0;
+        }
+
+        .post-box {
+            max-width: 1080px;
+            margin: 0 auto 10px;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 18px;
+            padding: 18px 20px 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .post-box-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .post-box input[type="text"],
+        .post-box textarea,
+        .post-box select {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .post-box textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .post-box input[type="file"] {
+            font-size: 0.8rem;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .btn-post {
+            background: #26a69a;
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 7px 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-post:hover {
+            background: #4db6ac;
+        }
+
+        .post-preview-img {
+            margin-top: 8px;
+            max-height: 160px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            display: none;
+        }
+
+        /* RELATED SEARCHES */
+        .related-searches {
+            max-width: 1080px;
+            margin: 8px auto 0;
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+
+        /* STORIES GRID */
+        .stories-section {
+            padding: 20px 16px 40px;
+        }
+
         .stories-grid {
-            max-width: 1080px; margin: 0 auto; display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px;
+            max-width: 1080px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
         }
 
         .story-card {
-            position: relative; border-radius: var(--radius-xl); padding: 20px 20px 60px;
-            background: rgba(255, 255, 255, 0.9); box-shadow: var(--shadow-soft);
-            overflow: hidden; cursor: pointer; transition: var(--transition);
+            position: relative;
+            border-radius: var(--radius-xl);
+            padding: 18px 18px 64px;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: var(--shadow-soft);
             border: 1px solid rgba(226, 232, 240, 0.9);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .story-card:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(15, 23, 42, 0.15); }
+
+        .story-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 60px rgba(15, 23, 42, 0.15);
+        }
 
         .story-chip {
-            display: inline-flex; align-items: center; gap: 6px;
-            border-radius: 999px; padding: 4px 9px; font-size: 0.75rem;
-            background: rgba(148, 163, 184, 0.14); margin-bottom: 10px;
-        }
-        .story-footer {
-            position: absolute; left: 20px; right: 20px; bottom: 15px;
-            display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            background: rgba(148, 163, 184, 0.14);
+            margin-bottom: 8px;
         }
 
-        /* ================= MODAL ================= */
-        .modal-backdrop-custom {
-            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85);
-            display: flex; align-items: center; justify-content: center; padding: 16px;
-            opacity: 0; pointer-events: none; transition: opacity 0.2s ease-out; z-index: 2000;
+        .story-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 3px 0 6px;
+            color: #111827;
         }
-        .modal-backdrop-custom.open { opacity: 1; pointer-events: auto; }
+
+        .story-meta {
+            font-size: 0.78rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .story-snippet {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .story-image {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 10px;
+        }
+
+        .story-footer {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .story-author .avatar {
+            width: 25px;
+            height: 25px;
+            font-size: 0.7rem;
+        }
+
+        .read-link {
+            color: #26a69a;
+            font-weight: 600;
+            font-size: 0.76rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .story-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            border: none;
+            background: rgba(229, 57, 53, 0.1);
+            color: #e53935;
+            font-size: 0.72rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background: rgba(229, 57, 53, 0.18);
+        }
+
+        /* MODAL */
+        .modal-backdrop-custom {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-out;
+            z-index: 2000;
+        }
+
+        .modal-backdrop-custom.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
         .modal-dialog-custom {
-            position: relative; max-width: 680px; width: 100%; max-height: 90vh; overflow-y: auto;
-            border-radius: 24px; background: #ffffff; padding: 32px;
+            position: relative;
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            background: #ffffff;
+            padding: 32px;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
         }
-        .modal-close {
-            position: absolute; top: 15px; right: 15px; width: 36px; height: 36px;
-            border-radius: 50%; border: 1px solid #ddd; background: #f8fafc; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-        }
-        .modal-body p { margin-bottom: 15px; color: #444; }
 
-        /* Footer */
-        footer { text-align: center; padding: 40px; color: #888; font-size: 0.9rem; }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: #f8fafc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 260px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 18px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -166,7 +503,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    
                     <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
                     <li class="nav-item"><a class="nav-link" href="/learn">Learn</a></li>
                     <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
@@ -174,35 +510,38 @@
                     <li class="nav-item"><a class="nav-link" href="/how-it-works">How it Works</a></li>
 
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/services">Book Session</a></li>
-                        <li class="nav-item ms-lg-3">
-                            <a class="nav-link fw-bold" style="color: #26a69a;" href="/profile">
-                                <i class="fas fa-user-circle me-1"></i> 
-                                {{ current_user.name if current_user.name else "Profile" }}
-                            </a>
-                        </li>
-                        <li class="nav-item ms-2">
-                            <a class="btn btn-outline-danger btn-sm rounded-pill px-3" href="/logout">Logout</a>
-                        </li>
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Book Session</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link fw-bold" style="color: #26a69a;" href="/profile">
+                            <i class="fas fa-user-circle me-1"></i>
+                            {{ current_user.name if current_user.name else "Profile" }}
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-outline-danger btn-sm rounded-pill px-3" href="/logout">Logout</a>
+                    </li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
-                        <li class="nav-item ms-lg-3">
-                            <a class="btn btn-teal" href="/get-started">Get Started</a>
-                        </li>
+                    <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-teal" href="/get-started">Get Started</a>
+                    </li>
                     {% endif %}
-                    
+
                 </ul>
             </div>
         </div>
     </nav>
 
+
+    <!-- HERO -->
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-copy">
                 <h1>Real journeys. Gentle hope.</h1>
-                <p>These are fictional, anonymized stories inspired by thousands of real journeys. Explore how others took their first step.</p>
+                <p>These are fictional, anonymized stories inspired by thousands of real journeys. Explore how others
+                    took their first step.</p>
                 <div class="hero-tags">
                     <span class="pill">Student stress</span>
                     <span class="pill">Burnout</span>
@@ -212,7 +551,8 @@
             </div>
             <div class="glass-card">
                 <p style="font-style: italic; color: #555; margin-bottom: 15px;">
-                    “Reading other people’s journeys reminded me that struggling doesn’t make me weak—it makes me human.”
+                    “Reading other people’s journeys reminded me that struggling doesn’t make me weak—it makes me
+                    human.”
                 </p>
                 <div class="hero-person">
                     <div class="avatar">RS</div>
@@ -225,10 +565,12 @@
         </div>
     </section>
 
+    <!-- SEARCH / FILTER -->
     <section class="controls-section">
         <div class="controls-inner">
             <div class="search-group">
-                <label style="font-size:0.85rem; color:#666; margin-bottom:5px; display:block;">Search by title, emotion, or situation</label>
+                <label style="font-size:0.85rem; color:#666; margin-bottom:5px; display:block;">Search by title,
+                    emotion, or situation</label>
                 <div class="search-input-wrap">
                     <i class="bi bi-search" style="color:#888;"></i>
                     <input id="searchInput" type="text" placeholder="Try: exams, work, anxiety..." />
@@ -248,9 +590,38 @@
         </div>
     </section>
 
-    <section class="stories-section">
-        <div class="stories-grid" id="storiesGrid">
+    <!-- POST BOX -->
+    <section class="post-section">
+        <div class="post-box">
+            <div class="post-box-title">Share your journey (optional & anonymous)</div>
+
+            <input id="title" type="text" placeholder="Title" />
+            <textarea id="content" placeholder="Write your story..."></textarea>
+
+            <select id="condition" class="mt-2">
+                <option value="anxiety">Anxiety</option>
+                <option value="depression">Depression</option>
+            </select>
+
+            <div class="post-actions">
+                <div>
+                    <input id="image" type="file" accept="image/*">
+                </div>
+                <button class="btn-post" onclick="submitPost()">Post story</button>
             </div>
+            <img id="imagePreview" class="post-preview-img">
+        </div>
+    </section>
+
+    <!-- RELATED SEARCHES -->
+    <div class="related-searches">
+        <strong>Related searches:</strong>
+        <span id="relatedSearches"></span>
+    </div>
+
+    <!-- STORIES GRID -->
+    <section class="stories-section">
+        <div class="stories-grid" id="storiesGrid"></div>
         <p id="emptyState" style="text-align:center; color:#888; margin-top:30px;" hidden>
             No stories match your search. Try different keywords.
         </p>
@@ -260,10 +631,11 @@
         <p>These stories are fictional and anonymized for learning.<br>© 2025 MindHaven</p>
     </footer>
 
+    <!-- MODAL -->
     <div class="modal-backdrop-custom" id="storyModal">
         <div class="modal-dialog-custom">
             <button class="modal-close" id="modalClose"><i class="bi bi-x-lg"></i></button>
-            
+
             <div style="display:flex; gap:15px; margin-bottom:20px;">
                 <div class="avatar" id="modalAvatar" style="width:50px; height:50px; font-size:1.1rem;"></div>
                 <div>
@@ -271,19 +643,26 @@
                     <p id="modalMeta" style="margin:0; font-size:0.9rem; color:#666;"></p>
                 </div>
             </div>
-            
-            <div id="modalTags" style="margin-bottom:20px; display:flex; gap:5px;"></div>
-            <hr style="border:0; border-top:1px solid #eee; margin-bottom:20px;">
+
+            <div id="modalTags" style="margin-bottom:12px; display:flex; gap:5px; flex-wrap:wrap;"></div>
+
+            <img id="modalImage" class="modal-image" style="display:none;">
+
             <div class="modal-body" id="modalBody" style="line-height:1.8;"></div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        // --- STORIES DATA ---
-        const STORIES = [
+        /* ---------- STATIC STORIES (dummy text) ---------- */
+        const STATIC_STORIES = [
             {
-                id: 1, name: "Aarav (fictional)", initials: "AR", age: 19, location: "Student",
+                id: 1,
+                name: "Aarav (fictional)",
+                initials: "AR",
+                age: 19,
+                location: "Student",
                 title: "“Exams felt like a wall I could never climb.”",
                 snippet: "During boards, Aarav stopped sleeping properly. Every test result felt like a verdict on his worth...",
                 full: [
@@ -293,10 +672,17 @@
                     "The counselor gently helped him separate 'I failed a test' from 'I am a failure'. They created a realistic revision plan with breaks.",
                     "Six months later, Aarav still feels nervous before exams—but he no longer treats fear as proof that he isn't good enough."
                 ],
-                tags: ["student", "exams", "anxiety"], emotion: "Exam anxiety", length: "Medium"
+                tags: ["student", "exams", "anxiety"],
+                emotion: "Exam anxiety",
+                length: "Medium",
+                condition: "anxiety"
             },
             {
-                id: 2, name: "Meera (fictional)", initials: "MR", age: 27, location: "Remote worker",
+                id: 2,
+                name: "Meera (fictional)",
+                initials: "MR",
+                age: 27,
+                location: "Remote worker",
                 title: "“I loved my job… until I couldn’t feel anything.”",
                 snippet: "Meera’s dream role slowly turned into 12-hour days and a constant fear of ‘not doing enough’...",
                 full: [
@@ -306,10 +692,17 @@
                     "With her counselor, she learned to name it: burnout. They worked on setting small boundaries.",
                     "She didn’t quit immediately. Instead, she slowly rebuilt a life that wasn’t only about productivity."
                 ],
-                tags: ["work", "burnout", "boundaries"], emotion: "Burnout", length: "Long"
+                tags: ["work", "burnout", "boundaries"],
+                emotion: "Burnout",
+                length: "Long",
+                condition: "depression"
             },
             {
-                id: 3, name: "Imran (fictional)", initials: "IM", age: 22, location: "Hostel resident",
+                id: 3,
+                name: "Imran (fictional)",
+                initials: "IM",
+                age: 22,
+                location: "Hostel resident",
                 title: "“Everyone was around me. I still felt invisible.”",
                 snippet: "First year in a new city was supposed to be exciting. For Imran, it felt like scrolling through other people’s friendships...",
                 full: [
@@ -319,10 +712,17 @@
                     "The volunteer asked questions and normalized his experience. Together, they built a tiny action plan: one real conversation per week.",
                     "Over time, Imran noticed that feeling lonely didn’t mean he was unlovable—it meant he needed connection in a different way."
                 ],
-                tags: ["loneliness", "student", "adjustment"], emotion: "Loneliness", length: "Medium"
+                tags: ["loneliness", "student", "adjustment"],
+                emotion: "Loneliness",
+                length: "Medium",
+                condition: "anxiety"
             },
             {
-                id: 4, name: "Kavya (fictional)", initials: "KV", age: 24, location: "Creative",
+                id: 4,
+                name: "Kavya (fictional)",
+                initials: "KV",
+                age: 24,
+                location: "Creative",
                 title: "“I only felt valuable when I was ‘useful’.”",
                 snippet: "Kavya said yes to every favour, even when she was exhausted, worried people would leave if she set a boundary...",
                 full: [
@@ -331,27 +731,109 @@
                     "They practiced micro-boundaries: replying with 'I’m at capacity today' instead of a guilty yes.",
                     "Kavya still cares deeply. The difference is that she no longer disappears from her own life to stay in theirs."
                 ],
-                tags: ["self-esteem", "relationships", "boundaries"], emotion: "Self-worth", length: "Medium"
+                tags: ["self-esteem", "relationships", "boundaries"],
+                emotion: "Self-worth",
+                length: "Medium",
+                condition: "depression"
             }
         ];
 
-        // --- LOGIC ---
+        /* ---------- RELATED SEARCHES ---------- */
+        const RELATED_SEARCHES = {
+            anxiety: [
+                "panic attacks",
+                "overthinking at night",
+                "social anxiety",
+                "exam anxiety",
+                "heart racing",
+                "fear of failure",
+                "constant worry",
+                "breathing exercises",
+                "grounding techniques",
+                "health anxiety"
+            ],
+            depression: [
+                "feeling numb",
+                "low motivation",
+                "burnout",
+                "loss of interest",
+                "sleep issues",
+                "feeling empty",
+                "self-doubt",
+                "can't get out of bed",
+                "mental exhaustion",
+                "coping with sadness"
+            ],
+            all: [
+                "mental health",
+                "self care",
+                "emotional support",
+                "stress management",
+                "therapy experiences",
+                "student burnout",
+                "work life balance",
+                "healing journey"
+            ]
+        };
+
+        /* ---------- USER STORIES (LOCALSTORAGE) ---------- */
+        let userStories = JSON.parse(localStorage.getItem("userStories") || "[]");
+
+        /* ---------- DOM REFS ---------- */
         const storiesGrid = document.getElementById("storiesGrid");
         const searchInput = document.getElementById("searchInput");
         const filterChips = document.getElementById("filterChips");
         const emptyState = document.getElementById("emptyState");
         const modalBackdrop = document.getElementById("storyModal");
+        const modalAvatar = document.getElementById("modalAvatar");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalMeta = document.getElementById("modalMeta");
+        const modalTags = document.getElementById("modalTags");
+        const modalBody = document.getElementById("modalBody");
+        const modalImage = document.getElementById("modalImage");
+
+        const imageInput = document.getElementById("image");
+        const imagePreview = document.getElementById("imagePreview");
+        const conditionSelect = document.getElementById("condition");
 
         let activeThemeFilter = "all";
         let currentSearch = "";
 
+        /* ---------- RELATED SEARCHES RENDER ---------- */
+        function updateRelatedSearches(type) {
+            const box = document.getElementById("relatedSearches");
+            const items = RELATED_SEARCHES[type] || RELATED_SEARCHES.all;
+
+            box.innerHTML = items.map(term => `
+                <span class="pill"
+                    style="cursor:pointer;margin-right:6px"
+                    onclick="searchInput.value='${term}'; currentSearch='${term.toLowerCase()}'; renderStories();">
+                    #${term}
+                </span>
+            `).join("");
+        }
+
+        /* ---------- RENDER STORIES ---------- */
         function renderStories() {
             storiesGrid.innerHTML = "";
             const query = currentSearch.trim().toLowerCase();
 
-            const filtered = STORIES.filter((story) => {
-                const matchesTheme = activeThemeFilter === "all" || story.tags.includes(activeThemeFilter);
-                const fullText = (story.title + " " + story.snippet + " " + story.emotion + " " + story.tags.join(" ")).toLowerCase();
+            // Newest LAST: static first, then user in the order they were created (push)
+            const allStories = [...STATIC_STORIES, ...userStories];
+
+            const filtered = allStories.filter(story => {
+                const tags = story.tags || ["user"];
+                const matchesTheme = activeThemeFilter === "all" || tags.includes(activeThemeFilter);
+
+                const parts = [
+                    story.title || "",
+                    story.snippet || "",
+                    story.content || "",
+                    story.emotion || "",
+                    (tags || []).join(" ")
+                ];
+                const fullText = parts.join(" ").toLowerCase();
+
                 return matchesTheme && (!query || fullText.includes(query));
             });
 
@@ -361,55 +843,122 @@
             }
             emptyState.hidden = true;
 
-            filtered.forEach((story) => {
+            filtered.forEach(story => {
                 const card = document.createElement("article");
                 card.className = "story-card";
+
+                const emotion = story.emotion || (story.condition === "anxiety" ? "Anxiety" :
+                    story.condition === "depression" ? "Depression" : "Shared by community");
+                const lengthLabel = story.length || "Short read";
+                const location = story.location || "Shared on MindHaven";
+                const name = story.name || "Community member";
+                const initials = story.initials || "MH";
+
+                const snippet =
+                    story.snippet ||
+                    (story.content
+                        ? (story.content.length > 160
+                            ? story.content.slice(0, 157) + "..."
+                            : story.content)
+                        : "");
+
                 card.innerHTML = `
-                    <div class="story-chip"><i class="bi bi-heart-pulse"></i><span>${story.emotion}</span></div>
-                    <h3 style="font-size:1.1rem; margin:0 0 10px;">${story.title}</h3>
-                    <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">${story.location} • ${story.length} read</p>
-                    <p style="font-size:0.9rem; color:#555;">${story.snippet}</p>
+                    <div class="story-chip">
+                        <i class="bi bi-heart-pulse"></i>
+                        <span>${emotion}</span>
+                    </div>
+
+                    <h3 class="story-title">${story.title || "Shared story"}</h3>
+
+                    <p class="story-meta">${location} • ${lengthLabel}</p>
+
+                    <p class="story-snippet">${snippet}</p>
+
+                    ${story.image ? `
+                        <img src="${story.image}" class="story-image" alt="Story image">
+                    ` : ""}
+
                     <div class="story-footer">
-                        <span style="display:flex; align-items:center; gap:5px;">
-                            <div class="avatar" style="width:25px; height:25px; font-size:0.7rem;">${story.initials}</div>
-                            <span>${story.name}</span>
-                        </span>
-                        <span style="color:#26a69a; font-weight:600; font-size:0.75rem;"><i class="bi bi-book me-1"></i> Read</span>
+                        <div class="story-author">
+                            <div class="avatar">${initials}</div>
+                            <span>${name}</span>
+                        </div>
+
+                        <div class="story-actions">
+                            <span class="read-link">
+                                <i class="bi bi-book"></i> Read
+                            </span>
+
+                            ${story.isUser ? `
+                                <button class="delete-btn"
+                                    onclick="event.stopPropagation(); deletePost(${story.id});">
+                                    Delete
+                                </button>
+                            ` : ``}
+                        </div>
                     </div>
                 `;
+
                 card.addEventListener("click", () => openModal(story));
                 storiesGrid.appendChild(card);
             });
         }
 
+        /* ---------- MODAL ---------- */
         function openModal(story) {
-            document.getElementById("modalAvatar").textContent = story.initials;
-            document.getElementById("modalTitle").textContent = story.title.replace(/(^“|”$)/g, "");
-            document.getElementById("modalMeta").textContent = `${story.name} • ${story.age} • ${story.location}`;
-            
-            const tagsContainer = document.getElementById("modalTags");
-            tagsContainer.innerHTML = "";
-            story.tags.forEach(tag => {
+            const initials = story.initials || "MH";
+            const name = story.name || "Community member";
+            const age = story.age || "";
+            const location = story.location || "Shared on MindHaven";
+
+            modalAvatar.textContent = initials;
+            modalTitle.textContent =
+                (story.title || "").replace(/(^“|”$)/g, "") || "Shared story";
+            modalMeta.textContent = age
+                ? `${name} • ${age} • ${location}`
+                : `${name} • ${location}`;
+
+            modalTags.innerHTML = "";
+            (story.tags || ["user"]).forEach(tag => {
                 const span = document.createElement("span");
                 span.className = "pill";
                 span.style.fontSize = "0.75rem";
                 span.textContent = "#" + tag;
-                tagsContainer.appendChild(span);
+                modalTags.appendChild(span);
             });
 
-            document.getElementById("modalBody").innerHTML = story.full.map(p => `<p>${p}</p>`).join("");
+            if (story.image) {
+                modalImage.src = story.image;
+                modalImage.style.display = "block";
+            } else {
+                modalImage.src = "";
+                modalImage.style.display = "none";
+            }
+
+            const bodyParas =
+                story.full && story.full.length
+                    ? story.full
+                    : [story.content || "This story was shared by a member of the MindHaven community."];
+
+            modalBody.innerHTML = bodyParas.map(p => `<p>${p}</p>`).join("");
+
             modalBackdrop.classList.add("open");
         }
 
-        document.getElementById("modalClose").onclick = () => modalBackdrop.classList.remove("open");
-        modalBackdrop.onclick = (e) => { if(e.target === modalBackdrop) modalBackdrop.classList.remove("open"); };
+        document.getElementById("modalClose").onclick = () =>
+            modalBackdrop.classList.remove("open");
 
-        searchInput.addEventListener("input", (e) => {
+        modalBackdrop.onclick = (e) => {
+            if (e.target === modalBackdrop) modalBackdrop.classList.remove("open");
+        };
+
+        /* ---------- SEARCH / FILTER ---------- */
+        searchInput.addEventListener("input", e => {
             currentSearch = e.target.value;
             renderStories();
         });
 
-        filterChips.addEventListener("click", (e) => {
+        filterChips.addEventListener("click", e => {
             if (e.target.matches(".chip")) {
                 activeThemeFilter = e.target.dataset.theme;
                 document.querySelectorAll(".chip").forEach(c => c.classList.remove("chip-active"));
@@ -418,8 +967,100 @@
             }
         });
 
-        // Initial Render
+        /* ---------- POST BOX: IMAGE PREVIEW ---------- */
+        imageInput.addEventListener("change", () => {
+            const file = imageInput.files[0];
+            if (!file) {
+                imagePreview.style.display = "none";
+                imagePreview.src = "";
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => {
+                imagePreview.src = reader.result;
+                imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        });
+
+        /* ---------- POST BOX: SUBMIT ---------- */
+        function submitPost() {
+            const titleEl = document.getElementById("title");
+            const contentEl = document.getElementById("content");
+
+            const title = titleEl.value.trim();
+            const content = contentEl.value.trim();
+            const condition = conditionSelect.value;
+            const file = imageInput.files[0];
+
+            if (!title || !content) {
+                alert("Please add a title and your story.");
+                return;
+            }
+
+            const createAndSave = (imageData) => {
+                const post = {
+                    id: Date.now(),
+                    title,
+                    content,
+                    snippet: content.length > 160 ? content.slice(0, 157) + "..." : content,
+                    image: imageData || null,
+                    isUser: true,
+                    name: "Community member",
+                    initials: "MH",
+                    location: "Shared on MindHaven",
+                    emotion: condition === "anxiety" ? "Anxiety" : "Depression",
+                    length: "Short read",
+                    tags: [condition],
+                    full: [content],
+                    condition,
+                    createdAt: new Date().toISOString()
+                };
+
+                // Newest LAST: push
+                userStories.push(post);
+                localStorage.setItem("userStories", JSON.stringify(userStories));
+
+                clearForm();
+                renderStories();
+                updateRelatedSearches(condition);
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => createAndSave(reader.result);
+                reader.readAsDataURL(file);
+            } else {
+                createAndSave(null);
+            }
+        }
+
+        function clearForm() {
+            document.getElementById("title").value = "";
+            document.getElementById("content").value = "";
+            imageInput.value = "";
+            imagePreview.src = "";
+            imagePreview.style.display = "none";
+        }
+
+        window.submitPost = submitPost;
+
+        /* ---------- DELETE POST ---------- */
+        function deletePost(id) {
+            userStories = userStories.filter(s => s.id !== id);
+            localStorage.setItem("userStories", JSON.stringify(userStories));
+            renderStories();
+        }
+        window.deletePost = deletePost;
+
+        /* ---------- INIT ---------- */
+        conditionSelect.addEventListener("change", () => {
+            updateRelatedSearches(conditionSelect.value);
+        });
+
+        updateRelatedSearches("all");
         renderStories();
     </script>
 </body>
+
 </html>
