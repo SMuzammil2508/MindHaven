@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindHaven Stories — Journeys of Hope</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* ================= THEME VARIABLES ================= */
+        :root {
+            --teal-500: #26a69a;
+            --teal-400: #4db6ac;
+            --purple-500: #667eea;
+            --bg-light: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            --surface: rgba(255, 255, 255, 0.82);
+            --text-strong: #0f172a;
+            --text: #334155;
+            --text-muted: #64748b;
+            --radius-xl: 24px;
+            --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.12);
+            --transition: all 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 80px; /* Space for fixed navbar */
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ================= NAVBAR (BOOTSTRAP OVERRIDE) ================= */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .navbar-brand { font-weight: 700; color: #26a69a !important; font-size: 1.5rem; }
+        .nav-link { color: #555 !important; font-weight: 500; margin: 0 10px; transition: color 0.3s; position: relative;}
+        .nav-link:hover { color: #26a69a !important; }
+        .btn-teal {
+            background-color: #26a69a; color: white; font-weight: 600;
+            border-radius: 50px; padding: 8px 25px; border: none; transition: all 0.3s ease;
+        }
+        .btn-teal:hover { background-color: #4db6ac; color: white; transform: translateY(-2px); }
+
+        /* ================= HERO SECTION ================= */
+        .hero { padding: 40px 16px 20px; }
+        .hero-inner {
+            max-width: 1080px; margin: 0 auto; display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.6fr);
+            gap: 32px; align-items: center;
+        }
+        @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; } }
+
+        .hero-copy h1 { font-size: clamp(2.1rem, 2.7vw, 2.8rem); color: var(--text-strong); margin: 0 0 10px; }
+        .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .pill { border-radius: 999px; padding: 4px 10px; font-size: 0.8rem; background: rgba(148, 163, 184, 0.18); }
+
+        /* Glass Card */
+        .glass-card {
+            border-radius: var(--radius-xl); padding: 20px;
+            background: var(--surface); box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(18px); border: 1px solid rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        .glass-card:hover { transform: translateY(-4px); }
+
+        .hero-person { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+        .avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: grid; place-items: center; font-weight: 600; color: #fff;
+            background: linear-gradient(135deg, var(--teal-500), var(--purple-500));
+        }
+
+        /* ================= CONTROLS & SEARCH ================= */
+        .controls-section { padding: 20px 16px 0; }
+        .controls-inner {
+            max-width: 1080px; margin: 0 auto; display: grid;
+            grid-template-columns: minmax(0, 2.4fr) minmax(0, 2fr);
+            gap: 22px; align-items: flex-end;
+        }
+        @media (max-width: 900px) { .controls-inner { grid-template-columns: 1fr; } }
+
+        .search-input-wrap {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.86); border-radius: 999px;
+            padding: 10px 15px; box-shadow: var(--shadow-soft);
+        }
+        .search-input-wrap input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.9rem; }
+
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .chip {
+            border-radius: 999px; border: none; padding: 6px 12px; font-size: 0.8rem;
+            background: rgba(148, 163, 184, 0.16); cursor: pointer; transition: var(--transition);
+        }
+        .chip.chip-active, .chip:hover { background: var(--teal-500); color: #fff; }
+
+        /* ================= STORIES GRID ================= */
+        .stories-section { padding: 30px 16px 40px; }
+        .stories-grid {
+            max-width: 1080px; margin: 0 auto; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px;
+        }
+
+        .story-card {
+            position: relative; border-radius: var(--radius-xl); padding: 20px 20px 60px;
+            background: rgba(255, 255, 255, 0.9); box-shadow: var(--shadow-soft);
+            overflow: hidden; cursor: pointer; transition: var(--transition);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        .story-card:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(15, 23, 42, 0.15); }
+
+        .story-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            border-radius: 999px; padding: 4px 9px; font-size: 0.75rem;
+            background: rgba(148, 163, 184, 0.14); margin-bottom: 10px;
+        }
+        .story-footer {
+            position: absolute; left: 20px; right: 20px; bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;
+        }
+
+        /* ================= MODAL ================= */
+        .modal-backdrop-custom {
+            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85);
+            display: flex; align-items: center; justify-content: center; padding: 16px;
+            opacity: 0; pointer-events: none; transition: opacity 0.2s ease-out; z-index: 2000;
+        }
+        .modal-backdrop-custom.open { opacity: 1; pointer-events: auto; }
+
+        .modal-dialog-custom {
+            position: relative; max-width: 680px; width: 100%; max-height: 90vh; overflow-y: auto;
+            border-radius: 24px; background: #ffffff; padding: 32px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
+        }
+        .modal-close {
+            position: absolute; top: 15px; right: 15px; width: 36px; height: 36px;
+            border-radius: 50%; border: 1px solid #ddd; background: #f8fafc; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+        }
+        .modal-body p { margin-bottom: 15px; color: #444; }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px; color: #888; font-size: 0.9rem; }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-heartbeat me-2"></i> MindHaven
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    
+                    <li class="nav-item"><a class="nav-link" href="/learn">Learn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/how-it-works">How it Works</a></li>
+
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/services">Book Session</a></li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="nav-link fw-bold" style="color: #26a69a;" href="/profile">
+                                <i class="fas fa-user-circle me-1"></i> 
+                                {{ current_user.name if current_user.name else "Profile" }}
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="btn btn-outline-danger btn-sm rounded-pill px-3" href="/logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="btn btn-teal" href="/get-started">Get Started</a>
+                        </li>
+                    {% endif %}
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <h1>Real journeys. Gentle hope.</h1>
+                <p>These are fictional, anonymized stories inspired by thousands of real journeys. Explore how others took their first step.</p>
+                <div class="hero-tags">
+                    <span class="pill">Student stress</span>
+                    <span class="pill">Burnout</span>
+                    <span class="pill">Loneliness</span>
+                    <span class="pill">Anxiety</span>
+                </div>
+            </div>
+            <div class="glass-card">
+                <p style="font-style: italic; color: #555; margin-bottom: 15px;">
+                    “Reading other people’s journeys reminded me that struggling doesn’t make me weak—it makes me human.”
+                </p>
+                <div class="hero-person">
+                    <div class="avatar">RS</div>
+                    <div>
+                        <div style="font-weight:600; font-size:0.95rem;">Riya (fictional)</div>
+                        <div style="font-size:0.8rem; color:#666;">College student • 20</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="controls-section">
+        <div class="controls-inner">
+            <div class="search-group">
+                <label style="font-size:0.85rem; color:#666; margin-bottom:5px; display:block;">Search by title, emotion, or situation</label>
+                <div class="search-input-wrap">
+                    <i class="bi bi-search" style="color:#888;"></i>
+                    <input id="searchInput" type="text" placeholder="Try: exams, work, anxiety..." />
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <span style="font-size:0.85rem; color:#666;">Filter by theme:</span>
+                <div class="filter-chips" id="filterChips">
+                    <button class="chip chip-active" data-theme="all">All</button>
+                    <button class="chip" data-theme="student">Students</button>
+                    <button class="chip" data-theme="work">Work & burnout</button>
+                    <button class="chip" data-theme="relationships">Relationships</button>
+                    <button class="chip" data-theme="self-esteem">Self-esteem</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stories-section">
+        <div class="stories-grid" id="storiesGrid">
+            </div>
+        <p id="emptyState" style="text-align:center; color:#888; margin-top:30px;" hidden>
+            No stories match your search. Try different keywords.
+        </p>
+    </section>
+
+    <footer>
+        <p>These stories are fictional and anonymized for learning.<br>© 2025 MindHaven</p>
+    </footer>
+
+    <div class="modal-backdrop-custom" id="storyModal">
+        <div class="modal-dialog-custom">
+            <button class="modal-close" id="modalClose"><i class="bi bi-x-lg"></i></button>
+            
+            <div style="display:flex; gap:15px; margin-bottom:20px;">
+                <div class="avatar" id="modalAvatar" style="width:50px; height:50px; font-size:1.1rem;"></div>
+                <div>
+                    <h3 id="modalTitle" style="margin:0; font-size:1.3rem; color:#2c3e50;"></h3>
+                    <p id="modalMeta" style="margin:0; font-size:0.9rem; color:#666;"></p>
+                </div>
+            </div>
+            
+            <div id="modalTags" style="margin-bottom:20px; display:flex; gap:5px;"></div>
+            <hr style="border:0; border-top:1px solid #eee; margin-bottom:20px;">
+            <div class="modal-body" id="modalBody" style="line-height:1.8;"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- STORIES DATA ---
+        const STORIES = [
+            {
+                id: 1, name: "Aarav (fictional)", initials: "AR", age: 19, location: "Student",
+                title: "“Exams felt like a wall I could never climb.”",
+                snippet: "During boards, Aarav stopped sleeping properly. Every test result felt like a verdict on his worth...",
+                full: [
+                    "During his 12th boards, Aarav began to measure his entire identity using one number: his marks.",
+                    "He started staying up until 3 AM scrolling through toppers’ study reels. Coffee became dinner. His phone stayed on silent.",
+                    "One night, after a panic attack, he found a mental health support platform linked in his college group.",
+                    "The counselor gently helped him separate 'I failed a test' from 'I am a failure'. They created a realistic revision plan with breaks.",
+                    "Six months later, Aarav still feels nervous before exams—but he no longer treats fear as proof that he isn't good enough."
+                ],
+                tags: ["student", "exams", "anxiety"], emotion: "Exam anxiety", length: "Medium"
+            },
+            {
+                id: 2, name: "Meera (fictional)", initials: "MR", age: 27, location: "Remote worker",
+                title: "“I loved my job… until I couldn’t feel anything.”",
+                snippet: "Meera’s dream role slowly turned into 12-hour days and a constant fear of ‘not doing enough’...",
+                full: [
+                    "When Meera joined, she was the 'always on' teammate. Slowly, 'just this quarter' stretched into two years.",
+                    "Her body tried complaining: headaches, random tears. She answered by opening yet another spreadsheet.",
+                    "One evening, she booked a session. She didn’t know what to call what she felt, so she used the word 'tired'.",
+                    "With her counselor, she learned to name it: burnout. They worked on setting small boundaries.",
+                    "She didn’t quit immediately. Instead, she slowly rebuilt a life that wasn’t only about productivity."
+                ],
+                tags: ["work", "burnout", "boundaries"], emotion: "Burnout", length: "Long"
+            },
+            {
+                id: 3, name: "Imran (fictional)", initials: "IM", age: 22, location: "Hostel resident",
+                title: "“Everyone was around me. I still felt invisible.”",
+                snippet: "First year in a new city was supposed to be exciting. For Imran, it felt like scrolling through other people’s friendships...",
+                full: [
+                    "Imran found himself surrounded by people he barely knew, sharing memes but not real feelings.",
+                    "He didn’t feel 'sad enough' to call it depression. He just felt invisible.",
+                    "He finally typed into a chat support: 'Is it normal to feel lonely even when you’re never alone?'",
+                    "The volunteer asked questions and normalized his experience. Together, they built a tiny action plan: one real conversation per week.",
+                    "Over time, Imran noticed that feeling lonely didn’t mean he was unlovable—it meant he needed connection in a different way."
+                ],
+                tags: ["loneliness", "student", "adjustment"], emotion: "Loneliness", length: "Medium"
+            },
+            {
+                id: 4, name: "Kavya (fictional)", initials: "KV", age: 24, location: "Creative",
+                title: "“I only felt valuable when I was ‘useful’.”",
+                snippet: "Kavya said yes to every favour, even when she was exhausted, worried people would leave if she set a boundary...",
+                full: [
+                    "Kavya was the friend everyone called. But somewhere along the way, she stopped being there for herself.",
+                    "During one session, her counselor asked, 'What if your worth didn’t depend on how much you give?'",
+                    "They practiced micro-boundaries: replying with 'I’m at capacity today' instead of a guilty yes.",
+                    "Kavya still cares deeply. The difference is that she no longer disappears from her own life to stay in theirs."
+                ],
+                tags: ["self-esteem", "relationships", "boundaries"], emotion: "Self-worth", length: "Medium"
+            }
+        ];
+
+        // --- LOGIC ---
+        const storiesGrid = document.getElementById("storiesGrid");
+        const searchInput = document.getElementById("searchInput");
+        const filterChips = document.getElementById("filterChips");
+        const emptyState = document.getElementById("emptyState");
+        const modalBackdrop = document.getElementById("storyModal");
+
+        let activeThemeFilter = "all";
+        let currentSearch = "";
+
+        function renderStories() {
+            storiesGrid.innerHTML = "";
+            const query = currentSearch.trim().toLowerCase();
+
+            const filtered = STORIES.filter((story) => {
+                const matchesTheme = activeThemeFilter === "all" || story.tags.includes(activeThemeFilter);
+                const fullText = (story.title + " " + story.snippet + " " + story.emotion + " " + story.tags.join(" ")).toLowerCase();
+                return matchesTheme && (!query || fullText.includes(query));
+            });
+
+            if (filtered.length === 0) {
+                emptyState.hidden = false;
+                return;
+            }
+            emptyState.hidden = true;
+
+            filtered.forEach((story) => {
+                const card = document.createElement("article");
+                card.className = "story-card";
+                card.innerHTML = `
+                    <div class="story-chip"><i class="bi bi-heart-pulse"></i><span>${story.emotion}</span></div>
+                    <h3 style="font-size:1.1rem; margin:0 0 10px;">${story.title}</h3>
+                    <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">${story.location} • ${story.length} read</p>
+                    <p style="font-size:0.9rem; color:#555;">${story.snippet}</p>
+                    <div class="story-footer">
+                        <span style="display:flex; align-items:center; gap:5px;">
+                            <div class="avatar" style="width:25px; height:25px; font-size:0.7rem;">${story.initials}</div>
+                            <span>${story.name}</span>
+                        </span>
+                        <span style="color:#26a69a; font-weight:600; font-size:0.75rem;"><i class="bi bi-book me-1"></i> Read</span>
+                    </div>
+                `;
+                card.addEventListener("click", () => openModal(story));
+                storiesGrid.appendChild(card);
+            });
+        }
+
+        function openModal(story) {
+            document.getElementById("modalAvatar").textContent = story.initials;
+            document.getElementById("modalTitle").textContent = story.title.replace(/(^“|”$)/g, "");
+            document.getElementById("modalMeta").textContent = `${story.name} • ${story.age} • ${story.location}`;
+            
+            const tagsContainer = document.getElementById("modalTags");
+            tagsContainer.innerHTML = "";
+            story.tags.forEach(tag => {
+                const span = document.createElement("span");
+                span.className = "pill";
+                span.style.fontSize = "0.75rem";
+                span.textContent = "#" + tag;
+                tagsContainer.appendChild(span);
+            });
+
+            document.getElementById("modalBody").innerHTML = story.full.map(p => `<p>${p}</p>`).join("");
+            modalBackdrop.classList.add("open");
+        }
+
+        document.getElementById("modalClose").onclick = () => modalBackdrop.classList.remove("open");
+        modalBackdrop.onclick = (e) => { if(e.target === modalBackdrop) modalBackdrop.classList.remove("open"); };
+
+        searchInput.addEventListener("input", (e) => {
+            currentSearch = e.target.value;
+            renderStories();
+        });
+
+        filterChips.addEventListener("click", (e) => {
+            if (e.target.matches(".chip")) {
+                activeThemeFilter = e.target.dataset.theme;
+                document.querySelectorAll(".chip").forEach(c => c.classList.remove("chip-active"));
+                e.target.classList.add("chip-active");
+                renderStories();
+            }
+        });
+
+        // Initial Render
+        renderStories();
+    </script>
+</body>
+</html>
