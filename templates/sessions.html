@@ -26,7 +26,7 @@
             color: var(--text-dark);
         }
 
-        /* Navbar (Simple Placeholder) */
+        /* Navbar */
         .navbar {
             background-color: var(--white);
             padding: 15px 40px;
@@ -187,9 +187,11 @@
             text-align: center;
             padding: 50px;
             color: var(--text-light);
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .session-card {
                 flex-direction: column;
@@ -215,49 +217,39 @@
         
         <div class="header-section">
             <h1>Your Sessions</h1>
-            <a href="/book" class="btn-book"><i class="fas fa-plus"></i> Book New</a>
+            <a href="/services" class="btn-book"><i class="fas fa-plus"></i> Book New</a>
         </div>
 
-        <div class="session-card">
-            <div class="status-strip status-upcoming"></div>
-            <div class="date-box">
-                <span class="day">12</span>
-                <span class="month">Dec</span>
-            </div>
-            <div class="session-info">
-                <h3>Cognitive Behavioral Therapy</h3>
-                <p><i class="far fa-clock"></i> 10:00 AM - 11:00 AM</p>
-                <div class="therapist-name">
-                    <i class="fas fa-user-md"></i> Dr. Sarah Jenkins
+        {% if sessions %}
+            {% for session in sessions %}
+            <div class="session-card">
+                <div class="status-strip status-upcoming"></div>
+                <div class="date-box">
+                    <span class="day">{{ session.date_day }}</span>
+                    <span class="month">{{ session.date_month }}</span>
+                </div>
+                <div class="session-info">
+                    <h3>Therapy Session</h3>
+                    <p><i class="far fa-clock"></i> {{ session.time }}</p>
+                    <div class="therapist-name">
+                        <i class="fas fa-user-md"></i> {{ session.therapist_name }}
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <a href="#" class="btn-join">Join Call</a>
+                    <br><br>
+                    <a href="#" class="btn-reschedule">Reschedule</a>
                 </div>
             </div>
-            <div class="session-actions">
-                <a href="#" class="btn-join">Join Call</a>
-                <br><br>
-                <a href="#" class="btn-reschedule">Reschedule</a>
+            {% endfor %}
+        
+        {% else %}
+            <div class="no-sessions">
+                <i class="fas fa-calendar-alt" style="font-size: 3rem; color: #ddd; margin-bottom: 20px;"></i>
+                <h3>No upcoming sessions.</h3>
+                <p>Book your first session to start your journey.</p>
             </div>
-        </div>
-
-        <div class="session-card">
-            <div class="status-strip status-upcoming"></div>
-            <div class="date-box">
-                <span class="day">28</span>
-                <span class="month">Dec</span>
-            </div>
-            <div class="session-info">
-                <h3>Stress Management</h3>
-                <p><i class="far fa-clock"></i> 02:00 PM - 03:00 PM</p>
-                <div class="therapist-name">
-                    <i class="fas fa-user-md"></i> Dr. Aravind Mehta
-                </div>
-            </div>
-            <div class="session-actions">
-                <span style="color: #888; font-size: 0.85rem;">Scheduled</span>
-                <br><br>
-                <a href="#" class="btn-reschedule">Details</a>
-            </div>
-        </div>
-
+        {% endif %}
         <h4 style="margin-top: 40px; color: #888;">Past Sessions</h4>
 
         <div class="session-card" style="opacity: 0.7;">

@@ -1,6 +1,47 @@
+
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from models import db, User, TherapistProfile, Story , bcrypt # import from models.py
+from datetime import datetime   
+
+
+# --- Add this dummy data list near the top of app.py ---
+therapists_data = [
+    {
+        "id": 1,
+        "name": "Dr. Sarah Jenkins",
+        "specialty": "Anxiety & Depression",
+        "location": "Mumbai, India (Online Available)",
+        "rating": 4.9,
+        "reviews": 120,
+        "price": "₹1500/hr",
+        "image": "https://randomuser.me/api/portraits/women/44.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Dr. Aravind Mehta",
+        "specialty": "Couples Therapy",
+        "location": "Delhi, India",
+        "rating": 4.7,
+        "reviews": 85,
+        "price": "₹2000/hr",
+        "image": "https://randomuser.me/api/portraits/men/32.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Ms. Emily Chen",
+        "specialty": "Child Psychology",
+        "location": "Bangalore, India",
+        "rating": 4.8,
+        "reviews": 200,
+        "price": "₹1800/hr",
+        "image": "https://randomuser.me/api/portraits/women/68.jpg"
+    }
+]
+
+
+
+
 
 app = Flask(__name__)
 
@@ -51,6 +92,40 @@ def take_quiz():
 app.config['SECRET_KEY'] = 'vnjnsojvnvhjvn7837438@#@#fdjg'  # replace with env var in production
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mindhaven.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+bookings = []  # In-memory storage for bookings
+
+# --- Add this new route ---
+@app.route('/services')
+def book_session():
+    return render_template('services.html', therapists=therapists_data)
+
+@app.route('/confirm_booking', methods=['POST'])
+def confirm_booking():
+    therapist_id = int(request.form.get('therapist_id'))
+    date_str = request.form.get('date') # Format: 2025-12-10
+    time = request.form.get('time')
+    
+    # Find therapist name based on ID
+    therapist = next((t for t in therapists_data if t["id"] == therapist_id), None)
+    
+    if therapist:
+        # Convert date "2025-12-10" to "10 Dec" for display
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        
+        new_booking = {
+            "therapist_name": therapist['name'],
+            "date_day": date_obj.strftime("%d"),   # e.g., "10"
+            "date_month": date_obj.strftime("%b"), # e.g., "Dec"
+            "time": time,
+            "status": "Upcoming"
+        }
+        
+        # Add to our list
+        bookings.append(new_booking)
+
+    return redirect(url_for('sessions'))
+
 
 # ------------------ INIT EXTENSIONS ------------------
 db.init_app(app)
@@ -104,8 +179,8 @@ def profile():
 @app.route("/sessions")
 @login_required
 def sessions():
-    # You can pass data here later to filter 'upcoming' vs 'previous'
-    return render_template("sessions.html")
+    # We pass 'sessions=bookings' so the HTML can read the list
+    return render_template("sessions.html", sessions=bookings)
 
 # ---------- USER AUTH ----------
 

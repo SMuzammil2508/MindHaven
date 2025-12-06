@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Therapist - MindHaven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Base Styles */
+        body { font-family: 'Poppins', sans-serif; background-color: #F4F7F6; margin: 0; padding: 20px; }
+        
+        /* Grid Layout for Therapists */
+        .therapist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Therapist Card */
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-5px); }
+
+        .card-header {
+            display: flex;
+            padding: 20px;
+            align-items: center;
+        }
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #50E3C2;
+        }
+        .info h3 { margin: 0; font-size: 1.2rem; color: #333; }
+        .info span { font-size: 0.9rem; color: #777; }
+        .rating { color: #f1c40f; font-size: 0.9rem; margin-top: 5px; }
+
+        .card-body {
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid #eee;
+        }
+        .details { margin: 15px 0; font-size: 0.9rem; color: #555; }
+        .details i { width: 20px; color: #4A90E2; }
+
+        .btn-book {
+            width: 100%;
+            padding: 12px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .btn-book:hover { background-color: #357ABD; }
+
+        /* --- MODAL (POPUP) STYLES --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            max-width: 90%;
+            position: relative;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        /* Form Elements inside Modal */
+        label { display: block; margin-top: 15px; font-weight: 600; color: #333; }
+        
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            margin-top: 5px;
+            box-sizing: border-box; 
+        }
+
+        /* Time Slots (Hidden initially) */
+        .time-slots {
+            display: none; /* Hidden until date is picked */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        .time-slots.visible {
+            display: grid;
+            opacity: 1;
+        }
+
+        .time-btn {
+            padding: 8px;
+            border: 1px solid #4A90E2;
+            background: white;
+            color: #4A90E2;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .time-btn:hover, .time-btn.selected {
+            background-color: #4A90E2;
+            color: white;
+        }
+
+        .confirm-section {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-confirm {
+            background-color: #50E3C2;
+            color: #0e5a4a;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center; color: #333;">Available Therapists</h1>
+    
+    <div class="therapist-grid">
+        {% for t in therapists %}
+        <div class="card">
+            <div class="card-header">
+                <img src="{{ t.image }}" alt="Doctor" class="avatar">
+                <div class="info">
+                    <h3>{{ t.name }}</h3>
+                    <span>{{ t.specialty }}</span>
+                    <div class="rating">
+                        <i class="fas fa-star"></i> {{ t.rating }} ({{ t.reviews }} reviews)
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="details">
+                    <p><i class="fas fa-map-marker-alt"></i> {{ t.location }}</p>
+                    <p><i class="fas fa-tag"></i> {{ t.price }}</p>
+                </div>
+                <button class="btn-book" onclick="openModal('{{ t.id }}', '{{ t.name }}')">Book Appointment</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Book Session</h2>
+            
+            <form action="/confirm_booking" method="POST">
+                <input type="hidden" id="selectedTherapistId" name="therapist_id">
+                <input type="hidden" id="selectedTime" name="time">
+
+                <label>Select Date:</label>
+                <input type="date" id="datePicker" name="date" onchange="showTimeSlots()">
+
+                <div id="timeSlots" class="time-slots">
+                    <label style="grid-column: 1/-1;">Select Time:</label>
+                    <div class="time-btn" onclick="selectTime(this, '09:00 AM')">09:00 AM</div>
+                    <div class="time-btn" onclick="selectTime(this, '11:00 AM')">11:00 AM</div>
+                    <div class="time-btn" onclick="selectTime(this, '02:00 PM')">02:00 PM</div>
+                    <div class="time-btn" onclick="selectTime(this, '04:00 PM')">04:00 PM</div>
+                    <div class="time-btn" onclick="selectTime(this, '06:00 PM')">06:00 PM</div>
+                </div>
+
+                <div id="confirmSection" class="confirm-section">
+                    <p>Confirm booking for <span id="displayTime"></span>?</p>
+                    <button type="submit" class="btn-confirm">Confirm Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("bookingModal");
+        const timeSlots = document.getElementById("timeSlots");
+        const confirmSection = document.getElementById("confirmSection");
+
+        // Open Modal
+        function openModal(id, name) {
+            modal.style.display = "flex";
+            document.getElementById("modalTitle").innerText = "Book with " + name;
+            document.getElementById("selectedTherapistId").value = id;
+            
+            // Set min date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById("datePicker").setAttribute('min', today);
+        }
+
+        // Close Modal
+        function closeModal() {
+            modal.style.display = "none";
+            // Reset form
+            timeSlots.classList.remove("visible");
+            confirmSection.style.display = "none";
+            document.getElementById("datePicker").value = "";
+        }
+
+        // Step 2: Show Time Slots when date is picked
+        function showTimeSlots() {
+            const dateVal = document.getElementById("datePicker").value;
+            if(dateVal) {
+                timeSlots.classList.add("visible");
+            }
+        }
+
+        // Step 3: Select Time and Show Confirm
+        function selectTime(element, time) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            // Add active class to clicked button
+            element.classList.add('selected');
+            
+            // Set hidden input value
+            document.getElementById("selectedTime").value = time;
+            document.getElementById("displayTime").innerText = time;
+            
+            // Show confirm button
+            confirmSection.style.display = "block";
+        }
+
+        // Close modal if clicking outside box
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
