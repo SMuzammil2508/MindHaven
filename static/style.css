@@ -1,0 +1,258 @@
+/* styles.css - Custom Bootstrap Styling for MindHaven Mental Health Platform */
+
+/* CSS Custom Properties */
+:root {
+    --primary-teal: #26a69a;
+    --primary-light: #4db6ac;
+    --secondary-purple: #667eea;
+    --purple-dark: #764ba2;
+    --gradient-bg: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+    --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --card-hover-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.navbar-brand{
+    font-size: 30px;
+}
+
+.nav-item{
+    font-size: 30px;
+    opacity: 0.7;
+    padding-right: 16px;
+   
+}
+/* .navbar-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.nav-item:hover{
+    /* padding:10px; */
+    opacity: 1;
+}
+
+/* Add this to styles.css to bring the content above the background animation */
+.hero-section .container {
+    position: relative;
+    z-index: 5;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    background: var(--gradient-bg);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.hero-section h1 {
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+}
+
+/* Custom Hero Button */
+.btn-hero {
+    background: white;
+    color: var(--primary-teal);
+    border: none;
+    padding: 18px 45px;
+    font-weight: 600;
+    border-radius: 50px;
+    font-size: 1.15rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--card-shadow);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+    color: var(--primary-teal) !important;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.2);
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.feature-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Step Cards */
+.step-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    height: 100%;
+}
+
+.step-number {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-light));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 auto 2rem;
+    box-shadow: 0 8px 25px rgba(38,166,154,0.3);
+}
+
+/* Service Cards */
+.service-card {
+    background: linear-gradient(135deg, var(--secondary-purple), var(--purple-dark));
+    color: white;
+    border-radius: 24px;
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+}
+
+.service-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.service-icon {
+    font-size: 4.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.95;
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    height: 100%;
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    font-size: 5rem;
+    font-family: serif;
+    color: var(--primary-teal);
+    opacity: 0.3;
+    font-weight: 300;
+}
+
+.stars {
+    color: #fbbf24;
+    font-size: 1.3rem;
+}
+
+/* Section Spacing */
+.section-padding {
+    padding: 100px 0;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    margin-bottom: 4rem;
+    color: #2c3e50;
+}
+
+/* Final CTA */
+.final-cta {
+    background: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 120px 0;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-padding {
+        padding: 70px 0;
+    }
+    .hero-section {
+        padding: 100px 0;
+    }
+}
+
+/* Accessibility */
+*:focus-visible {
+    outline: 3px solid var(--primary-teal);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Utility Overrides */
+.text-primary-custom { color: var(--primary-teal) !important; }
+.bg-gradient-custom { background: var(--gradient-bg) !important; }
+
