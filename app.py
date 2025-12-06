@@ -1,13 +1,131 @@
+
 from flask import Flask, render_template, request, redirect, url_for
-from flask_login import LoginManager, login_user, logout_user, login_required
-from models import db, User, Therapist, Story  # import from models.py
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
+from models import db, User, TherapistProfile, Story , bcrypt # import from models.py
+from datetime import datetime   
+
+
+# --- Add this dummy data list near the top of app.py ---
+therapists_data = [
+    {
+        "id": 1,
+        "name": "Dr. Sarah Jenkins",
+        "specialty": "Anxiety & Depression",
+        "location": "Mumbai, India (Online Available)",
+        "rating": 4.9,
+        "reviews": 120,
+        "price": "₹1500/hr",
+        "image": "https://randomuser.me/api/portraits/women/44.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Dr. Aravind Mehta",
+        "specialty": "Couples Therapy",
+        "location": "Delhi, India",
+        "rating": 4.7,
+        "reviews": 85,
+        "price": "₹2000/hr",
+        "image": "https://randomuser.me/api/portraits/men/32.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Ms. Emily Chen",
+        "specialty": "Child Psychology",
+        "location": "Bangalore, India",
+        "rating": 4.8,
+        "reviews": 200,
+        "price": "₹1800/hr",
+        "image": "https://randomuser.me/api/portraits/women/68.jpg"
+    }
+]
+
+
+
+
 
 app = Flask(__name__)
+
+# Add this to your imports
+from models import User, TherapistProfile, db
+
+@app.route("/take-quiz", methods=["GET", "POST"])
+@login_required
+def take_quiz():
+    if request.method == "POST":
+        # 1. Save Profile Details
+        current_user.full_name = request.form.get("full_name")
+        current_user.contact = request.form.get("contact")
+        current_user.location = request.form.get("location")
+        current_user.qualification = request.form.get("qualification")
+
+        # 2. Calculate Quiz Score (The Grading System)
+        # We assume 5 questions, values 1 (Low) to 5 (High)
+        q1 = int(request.form.get("q1")) # Stress
+        q2 = int(request.form.get("q2")) # Sleep
+        q3 = int(request.form.get("q3")) # Anxiety
+        q4 = int(request.form.get("q4")) # Mood
+        
+        total_score = q1 + q2 + q3 + q4
+        current_user.mental_health_score = total_score
+
+        # 3. The Matching Algorithm
+        category = ""
+        if total_score <= 8:
+            category = "Wellness Coach" # Low stress
+        elif total_score <= 14:
+            category = "Anxiety Specialist" # Moderate
+        else:
+            category = "Trauma Specialist" # High stress/Crisis
+
+        current_user.recommended_category = category
+        db.session.commit()
+
+        # 4. Find the Perfect Match in DB
+        # This looks for a therapist whose specialization matches the category
+        matched_therapist = TherapistProfile.query.filter(TherapistProfile.specialization.contains(category)).first()
+
+        return render_template("results.html", score=total_score, category=category, therapist=matched_therapist)
+
+    return render_template("quiz.html")
 
 # ------------------ CONFIG ------------------
 app.config['SECRET_KEY'] = 'vnjnsojvnvhjvn7837438@#@#fdjg'  # replace with env var in production
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mindhaven.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+bookings = []  # In-memory storage for bookings
+
+# --- Add this new route ---
+@app.route('/services')
+def book_session():
+    return render_template('services.html', therapists=therapists_data)
+
+@app.route('/confirm_booking', methods=['POST'])
+def confirm_booking():
+    therapist_id = int(request.form.get('therapist_id'))
+    date_str = request.form.get('date') # Format: 2025-12-10
+    time = request.form.get('time')
+    
+    # Find therapist name based on ID
+    therapist = next((t for t in therapists_data if t["id"] == therapist_id), None)
+    
+    if therapist:
+        # Convert date "2025-12-10" to "10 Dec" for display
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        
+        new_booking = {
+            "therapist_name": therapist['name'],
+            "date_day": date_obj.strftime("%d"),   # e.g., "10"
+            "date_month": date_obj.strftime("%b"), # e.g., "Dec"
+            "time": time,
+            "status": "Upcoming"
+        }
+        
+        # Add to our list
+        bookings.append(new_booking)
+
+    return redirect(url_for('sessions'))
+
 
 # ------------------ INIT EXTENSIONS ------------------
 db.init_app(app)
@@ -24,6 +142,7 @@ def load_user(user_id):
 @app.route("/")
 def home():
     return render_template("home.html")
+
 
 @app.route("/features")
 def features():
@@ -46,6 +165,22 @@ def stories():
     # Show all stories
     all_stories = Story.query.all()
     return render_template("stories.html", stories=all_stories)
+
+
+# PROFILE OF USER --------------
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html", user=current_user)
+
+
+# PREVIOUS SERSSIONS --------------
+
+@app.route("/sessions")
+@login_required
+def sessions():
+    # We pass 'sessions=bookings' so the HTML can read the list
+    return render_template("sessions.html", sessions=bookings)
 
 # ---------- USER AUTH ----------
 
@@ -103,12 +238,12 @@ def help():
         specialization = request.form.get("specialization", "")
         password = request.form["password"]
 
-        existing_therapist = Therapist.query.filter_by(email=email).first()
+        existing_therapist = TherapistProfile.query.filter_by(email=email).first()
         if existing_therapist:
             return "Therapist already registered."
 
-        therapist = Therapist(name=name, email=email, specialization=specialization)
-        therapist.set_password(password)
+        therapist = TherapistProfile(name=name, email=email, specialization=specialization)
+        TherapistProfile.set_password(password)
         db.session.add(therapist)
         db.session.commit()
         return "Thank you for registering as a therapist!"
