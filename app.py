@@ -48,23 +48,32 @@ def stories():
     return render_template("stories.html", stories=all_stories)
 
 # ---------- USER AUTH ----------
+
 @app.route("/get-started", methods=["GET", "POST"])
 def get_started():
     if request.method == "POST":
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
+        username = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
 
+        # Check if user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
+            # Better to use flash messages, but plain text works for now
             return "User already exists. Please log in."
 
+        # Create new user
         user = User(username=username, email=email)
-        user.set_password(password)
+        user.set_password(password)  # assuming you have a set_password method
         db.session.add(user)
         db.session.commit()
+
+        # Redirect to login after successful signup
         return redirect(url_for("login"))
+
+    # GET request → show signup form
     return render_template("get_started.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

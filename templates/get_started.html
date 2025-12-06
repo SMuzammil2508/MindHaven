@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Started</title>
+    <style>
+        /* Green + White Palette */
+        :root {
+            --green-dark: #26a69a;
+            --green-light: #4db6ac;
+            --white-soft: #f8f9ff;
+            --blue-light: #e3f2fd;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--white-soft);
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--green-dark);
+            margin-top: 30px;
+        }
+
+        form {
+            width: 350px;
+            margin: 40px auto;
+            padding: 25px;
+            background: var(--blue-light);
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--green-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--green-light);
+            border-radius: 6px;
+            background-color: var(--white-soft);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--green-dark), var(--green-light));
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--green-light);
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+            color: var(--green-dark);
+        }
+
+        a {
+            color: var(--green-dark);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: var(--green-light);
+        }
+    </style>
+</head>
+<body>
+    <h2>Create Your Account</h2>
+    <form method="POST" action="/get-started">
+        <label>Username:</label>
+        <input type="text" name="username" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p>Already registered? <a href="{{ url_for('login') }}">Login here</a></p>
+</body>
+</html>
