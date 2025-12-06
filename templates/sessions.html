@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Sessions - MindHaven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4A90E2; /* Calming Blue */
+            --accent-color: #50E3C2; /* Soft Teal */
+            --bg-color: #F4F7F6;
+            --text-dark: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+        }
+
+        /* Navbar (Simple Placeholder) */
+        .navbar {
+            background-color: var(--white);
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar .logo {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        .navbar a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-section h1 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+
+        .btn-book {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+        .btn-book:hover {
+            background-color: #357ABD;
+        }
+
+        /* Session Cards */
+        .session-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .session-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Status Indicator Strip on the left */
+        .status-strip {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+        }
+        .status-upcoming { background-color: var(--accent-color); }
+        .status-completed { background-color: #ddd; }
+
+        /* Date Box */
+        .date-box {
+            background-color: #f0f4f8;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            min-width: 70px;
+            margin-right: 25px;
+        }
+        .date-box .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+            line-height: 1;
+        }
+        .date-box .month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Content Info */
+        .session-info {
+            flex-grow: 1;
+        }
+        .session-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+        .session-info p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .therapist-name {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .therapist-name i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        /* Action Buttons */
+        .session-actions {
+            text-align: right;
+        }
+        .btn-join {
+            background-color: var(--accent-color);
+            color: #0e5a4a;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        .btn-reschedule {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-left: 15px;
+            transition: color 0.2s;
+        }
+        .btn-reschedule:hover {
+            color: var(--primary-color);
+        }
+
+        /* Empty State */
+        .no-sessions {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .session-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .date-box { margin: 0 0 15px 0; width: 100%; }
+            .session-actions { margin-top: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">MindHaven</div>
+        <div>
+            <a href="/">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/logout" style="color: #e74c3c;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="header-section">
+            <h1>Your Sessions</h1>
+            <a href="/book" class="btn-book"><i class="fas fa-plus"></i> Book New</a>
+        </div>
+
+        <div class="session-card">
+            <div class="status-strip status-upcoming"></div>
+            <div class="date-box">
+                <span class="day">12</span>
+                <span class="month">Dec</span>
+            </div>
+            <div class="session-info">
+                <h3>Cognitive Behavioral Therapy</h3>
+                <p><i class="far fa-clock"></i> 10:00 AM - 11:00 AM</p>
+                <div class="therapist-name">
+                    <i class="fas fa-user-md"></i> Dr. Sarah Jenkins
+                </div>
+            </div>
+            <div class="session-actions">
+                <a href="#" class="btn-join">Join Call</a>
+                <br><br>
+                <a href="#" class="btn-reschedule">Reschedule</a>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="status-strip status-upcoming"></div>
+            <div class="date-box">
+                <span class="day">28</span>
+                <span class="month">Dec</span>
+            </div>
+            <div class="session-info">
+                <h3>Stress Management</h3>
+                <p><i class="far fa-clock"></i> 02:00 PM - 03:00 PM</p>
+                <div class="therapist-name">
+                    <i class="fas fa-user-md"></i> Dr. Aravind Mehta
+                </div>
+            </div>
+            <div class="session-actions">
+                <span style="color: #888; font-size: 0.85rem;">Scheduled</span>
+                <br><br>
+                <a href="#" class="btn-reschedule">Details</a>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 40px; color: #888;">Past Sessions</h4>
+
+        <div class="session-card" style="opacity: 0.7;">
+            <div class="status-strip status-completed"></div>
+            <div class="date-box">
+                <span class="day" style="color: #888;">01</span>
+                <span class="month">Nov</span>
+            </div>
+            <div class="session-info">
+                <h3>Introductory Session</h3>
+                <p>Completed</p>
+                <div class="therapist-name">
+                    <i class="fas fa-user-md"></i> Dr. Sarah Jenkins
+                </div>
+            </div>
+            <div class="session-actions">
+                <a href="#" class="btn-reschedule">View Notes</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

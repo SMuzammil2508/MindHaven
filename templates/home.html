@@ -698,30 +698,69 @@
     <!-- Navbar -->
     <header class="site-header">
         <nav class="navbar navbar-expand-lg container py-3">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-                <span class="brand-logo">🫶</span>
-                <span class="brand-text"><strong>MindHaven</strong></span>
-            </a>
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+        <span class="brand-logo">🫶</span>
+        <span class="brand-text"><strong>MindHaven</strong></span>
+    </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div id="navMenu" class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                    <li class="nav-item"><a class="nav-link" href="/features">Feature</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/learn">Learn</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/how_it_works">How it works</a></li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary-soft ms-lg-2" href="/get-started">Get started</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <div id="navMenu" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="/features">Feature</a></li>
+            <li class="nav-item"><a class="nav-link" href="/learn">Learn</a></li>
+            <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
+            <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
+            <li class="nav-item"><a class="nav-link" href="/how_it_works">How it works</a></li>
+
+            {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown ms-lg-2">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://ui-avatars.com/api/?name={{ current_user.username }}&background=random&color=fff&size=128" 
+                             class="rounded-circle border" width="35" height="35" alt="Avatar">
+                        <span>{{ current_user.username }}</span>
+                    </a>
+                    
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2" style="border-radius: 12px; min-width: 220px;">
+                        <li><a class="dropdown-item py-2 rounded" href="/profile">
+                            <i class="bi bi-person-circle me-2"></i> My Profile
+                        </a></li>
+                        
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><h6 class="dropdown-header text-uppercase small text-muted mt-2">Sessions</h6></li>
+                        <li><a class="dropdown-item py-2 rounded d-flex justify-content-between" href="/sessions?filter=upcoming">
+                            <span><i class="bi bi-calendar-event me-2 text-success"></i> Upcoming</span>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill">2</span>
+                        </a></li>
+                        <li><a class="dropdown-item py-2 rounded" href="/sessions?filter=previous">
+                            <i class="bi bi-clock-history me-2 text-secondary"></i> History
+                        </a></li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li><a class="dropdown-item py-2 rounded text-danger" href="{{ url_for('logout') }}">
+                            <i class="bi bi-box-arrow-right me-2"></i> Logout
+                        </a></li>
+                    </ul>
+                </li>
+
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login') }}">Log in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary-soft ms-lg-2" href="/get-started">Get started</a>
+                </li>
+            {% endif %}
+            
+        </ul>
+    </div>
+</nav>
     </header>
 
     <!-- Hero -->
