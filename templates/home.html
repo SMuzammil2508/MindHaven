@@ -1,238 +1,1046 @@
  
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindHaven - Mental Health Support for All</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+<html lang="en" data-theme="light">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">Mind Haven</a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindHaven — Mental Health Support for All</title>
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫶</text></svg>">
+
+    <!-- Bootstrap 5 (optional for grid/utilities) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Design tokens */
+        :root {
+            /* Brand */
+            --teal-500: #26a69a;
+            --teal-400: #4db6ac;
+            --purple-500: #667eea;
+            --purple-600: #764ba2;
+            --warm-100: #ffecd2;
+            --warm-200: #fcb69f;
+
+            /* Surfaces */
+            --bg-gradient: linear-gradient(135deg, #e7f3ff 0%, #f3f8ff 100%);
+            --surface: #ffffff;
+            --surface-glass: rgba(255, 255, 255, 0.7);
+
+            /* Text */
+            --text-strong: #1f2937;
+            --text: #334155;
+            --text-muted: #64748b;
+
+            /* Effects */
+            --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-2: 0 20px 40px rgba(0, 0, 0, 0.12);
+
+            /* Radii */
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            /* Transitions */
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 300ms var(--ease);
+        }
+
+        /* Dark theme tokens */
+        html[data-theme="dark"] {
+            --bg-gradient: radial-gradient(1200px 600px at 10% -20%, #0f172a, transparent),
+                radial-gradient(800px 400px at 90% -20%, #111827, transparent),
+                linear-gradient(180deg, #0b1220, #0b1325);
+            --surface: #111827;
+            --surface-glass: rgba(17, 24, 39, 0.6);
+
+            --text-strong: #e5e7eb;
+            --text: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-2: 0 30px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Global reset-ish */
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            color: var(--text);
+            background: var(--bg-gradient);
+            line-height: 1.6;
+        }
+
+        /* Accessibility: skip link */
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: -999px;
+        }
+
+        .skip-link:focus {
+            left: 12px;
+            top: 12px;
+            background: var(--surface);
+            color: var(--text-strong);
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-1);
+        }
+
+        /* Top notice bar */
+        .notice-bar {
+            backdrop-filter: saturate(1.25) blur(6px);
+            background: linear-gradient(90deg, rgba(38, 166, 154, .12), rgba(118, 75, 162, .12));
+            color: var(--text);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .25);
+        }
+
+        .badge.bg-success-soft {
+            background: rgba(16, 185, 129, .15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, .25);
+        }
+
+        /* Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: transparent;
+            transition: background 200ms var(--ease), box-shadow 200ms var(--ease);
+        }
+
+        .site-header.scrolled {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, .6);
+            box-shadow: var(--shadow-1);
+        }
+
+        html[data-theme="dark"] .site-header.scrolled {
+            background: rgba(17, 24, 39, .55);
+        }
+
+        /* Brand */
+        .brand-logo {
+            font-size: 1.4rem;
+        }
+
+        .brand-text {
+            color: var(--text-strong);
+        }
+
+        /* Nav */
+        .navbar .nav-link {
+            color: var(--text);
+            transition: color 200ms var(--ease), opacity 200ms var(--ease);
+            opacity: .85;
+        }
+
+        .navbar .nav-link:hover {
+            color: var(--teal-500);
+            opacity: 1;
+        }
+
+        .btn-primary-soft {
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-400));
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            box-shadow: var(--shadow-1);
+            transition: var(--transition);
+        }
+
+        .btn-primary-soft:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-2);
+        }
+
+        .btn-icon {
+            border-radius: 999px;
+            background: var(--surface);
+            color: var(--text);
+            padding: 8px 12px;
+            box-shadow: var(--shadow-1);
+            border: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            padding: 90px 0 70px;
+            color: var(--text);
+        }
+
+        .hero .display-4 {
+            color: var(--text-strong);
+        }
+
+        .hero .lead {
+            color: var(--text);
+            max-width: 680px;
+        }
+
+        .hero-ctas .btn-hero,
+        .hero-ctas .btn-outline-hero {
+            border-radius: 999px;
+            padding: 14px 24px;
+            font-weight: 600;
+            box-shadow: var(--shadow-1);
+            transition: var(--transition);
+        }
+
+        .btn-hero {
+            background: #fff;
+            color: var(--teal-500);
+            border: 0;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-2);
+        }
+
+        .btn-outline-hero {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid rgba(0, 0, 0, .08);
+        }
+
+        html[data-theme="dark"] .btn-outline-hero {
+            border-color: rgba(255, 255, 255, .12);
+        }
+
+        .trust-badges .badge.bg-white-soft {
+            background: rgba(255, 255, 255, .75);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 10px 14px;
+            border: 1px solid rgba(0, 0, 0, .06);
+            margin-right: 8px;
+        }
+
+        /* Hero card */
+        .glass-card {
+            background: var(--surface-glass);
+            border: 1px solid rgba(255, 255, 255, .35);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-2);
+            padding: 22px;
+            backdrop-filter: blur(12px) saturate(1.1);
+            transform: translateZ(0);
+        }
+
+        .hero-card__header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hero-card__icon {
+            font-size: 1.4rem;
+            color: var(--teal-500);
+        }
+
+        .hero-card__title {
+            font-weight: 600;
+            color: var(--text-strong);
+        }
+
+        .hero-card__text {
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .hero-card__footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, var(--purple-500), var(--purple-600));
+        }
+
+        /* Decorative shapes */
+        .shape {
+            position: absolute;
+            filter: blur(40px);
+            opacity: .28;
+            pointer-events: none;
+            animation: float 12s var(--ease) infinite;
+        }
+
+        .shape-1 {
+            width: 220px;
+            height: 220px;
+            right: -60px;
+            top: -40px;
+            background: radial-gradient(var(--teal-400), transparent 60%);
+        }
+
+        .shape-2 {
+            width: 160px;
+            height: 160px;
+            left: -40px;
+            bottom: -30px;
+            background: radial-gradient(var(--purple-500), transparent 60%);
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            width: 120px;
+            height: 120px;
+            right: 20%;
+            top: 50%;
+            background: radial-gradient(#ffd7a3, transparent 60%);
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-12px)
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-alt {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e9f1ff 100%);
+        }
+
+        html[data-theme="dark"] .section-alt {
+            background: linear-gradient(135deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .02));
+        }
+
+        .section-warm {
+            background: linear-gradient(135deg, var(--warm-100) 0%, var(--warm-200) 100%);
+            color: #3b2f2f;
+        }
+
+        .section-title {
+            color: var(--text-strong);
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+        }
+
+        /* Feature cards */
+        .feature-card {
+            background: rgba(255, 255, 255, .9);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            box-shadow: var(--shadow-1);
+            border: 1px solid rgba(255, 255, 255, .4);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        html[data-theme="dark"] .feature-card {
+            background: rgba(17, 24, 39, .6);
+            border-color: rgba(255, 255, 255, .1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-400));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Step cards */
+        .step-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            box-shadow: var(--shadow-1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        html[data-theme="dark"] .step-card {
+            border-color: rgba(255, 255, 255, .08);
+        }
+
+        .step-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .04));
+            pointer-events: none;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 auto 14px;
+            box-shadow: var(--shadow-1);
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-400));
+        }
+
+        /* Services */
+        .service-card {
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-2);
+            transform: translateZ(0);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .service-icon {
+            font-size: 2.2rem;
+            opacity: .95;
+            margin-bottom: 10px;
+        }
+
+        .service-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(255, 255, 255, .6);
+        }
+
+        .service-gradient-1 {
+            background: linear-gradient(135deg, #4db6ac, #26a69a);
+        }
+
+        .service-gradient-2 {
+            background: linear-gradient(135deg, #6ea8fe, #667eea);
+        }
+
+        .service-gradient-3 {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+        }
+
+        .service-gradient-4 {
+            background: linear-gradient(135deg, #a855f7, #764ba2);
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 26px;
+            box-shadow: var(--shadow-1);
+            position: relative;
+            height: 100%;
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 12px;
+            left: 20px;
+            font-size: 4rem;
+            font-family: serif;
+            color: var(--teal-500);
+            opacity: .25;
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+
+        .person {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 0;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-400));
+        }
+
+        .final-cta .btn-hero,
+        .final-cta .btn-outline-hero {
+            background: #fff;
+            color: var(--teal-500);
+            margin: 6px;
+        }
+
+        .final-cta .btn-outline-hero {
+            background: transparent;
+            color: #fff;
+            border-color: rgba(255, 255, 255, .7);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--surface);
+            padding: 36px 0;
+            color: var(--text);
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            opacity: .85;
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--teal-500);
+        }
+
+        .footer-divider {
+            border: 0;
+            height: 1px;
+            background: rgba(0, 0, 0, .08);
+            margin: 20px 0;
+        }
+
+        html[data-theme="dark"] .footer-divider {
+            background: rgba(255, 255, 255, .1);
+        }
+
+        .social {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .06);
+            color: var(--text);
+        }
+
+        html[data-theme="dark"] .social {
+            background: rgba(255, 255, 255, .08);
+        }
+
+        /* Focus styles */
+        *:focus-visible {
+            outline: 3px solid var(--teal-500);
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .shape {
+                display: none !important;
+            }
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 991px) {
+            .hero {
+                padding: 70px 0 50px;
+            }
+        }
+
+        :root {
+            --teal-600: #1f8a85;
+            --teal-500: #26a69a;
+            --teal-400: #4db6ac;
+
+            --bg-light: linear-gradient(135deg, #e0f7fa 0%, #f0fdfa 100%);
+            --bg-dark: linear-gradient(135deg, #0d1b1e 0%, #0f2c2e 100%);
+
+            --text-light: #1f2937;
+            --text-dark: #e5e7eb;
+
+            --shadow-1: 0 8px 20px rgba(0, 0, 0, 0.12);
+            --shadow-2: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+            --radius-xl: 24px;
+        }
+
+        html[data-theme="light"] body {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        html[data-theme="dark"] body {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* Glassy cards */
+        .card-glass,
+        .feature-card,
+        .step-card,
+        .service-card,
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-1);
+            transition: all 0.3s ease;
+        }
+
+        html[data-theme="dark"] .card-glass,
+        html[data-theme="dark"] .feature-card,
+        html[data-theme="dark"] .step-card,
+        html[data-theme="dark"] .service-card,
+        html[data-theme="dark"] .testimonial-card {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Hover pop-out */
+        .card-glass:hover,
+        .feature-card:hover,
+        .step-card:hover,
+        .service-card:hover,
+        .testimonial-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-2);
+        }
+
+        /* Service gradients (teal only) */
+        .service-gradient-1,
+        .service-gradient-2,
+        .service-gradient-3,
+        .service-gradient-4 {
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-400));
+        }
+
+        /* Decorative shapes (teal only) */
+        .shape-1,
+        .shape-2,
+        .shape-3 {
+            background: radial-gradient(var(--teal-400), transparent 60%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip link -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Top notice bar -->
+    <div class="notice-bar" role="status">
+        <div class="container d-flex justify-content-center align-items-center gap-3">
+            <span class="badge bg-success-soft">New</span>
+            <span>24/7 multilingual support with community-trained counselors</span>
+            <a href="#services" class="link">See what’s available</a>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="site-header">
+        <nav class="navbar navbar-expand-lg container py-3">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <span class="brand-logo">🫶</span>
+                <span class="brand-text"><strong>MindHaven</strong></span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <div id="navMenu" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="/features">Feature</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/learn">Learn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/how_it_works">How it works</a></li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/learn">Learn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/help">Help</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/how_it_works">How it works</a>
+                        <a class="btn btn-primary-soft ms-lg-2" href="/get-started">Get started</a>
                     </li>
                 </ul>
             </div>
-        </div>
-    </nav>
-   
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-10 col-xl-9 text-center">
-                    <h1 class="display-1 fw-light mb-4 pb-2">Your Safe Space Awaits</h1>
-                    <p class="lead fs-3 mb-5 opacity-95">Timely mental health support for underserved communities. 24/7 care in your language, on your terms.</p>
-                    <a href="{{ url_for('get_started') }}" class="btn btn-hero btn-lg">Get Started Now</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </nav>
+    </header>
 
-    <section id="features" class="section-padding bg-white">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="heroTitle">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center mb-5">
-                    <h2 class="section-title">Why Choose MindHaven?</h2>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card h-100">
-                        <div class="feature-icon mb-4">🌍</div>
-                        <h3 class="h4 fw-semibold mb-3">Multilingual Support</h3>
-                        <p class="text-muted mb-0">Counselors who speak your language and understand your culture.</p>
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 id="heroTitle" class="display-4 fw-light">Your safe space awaits</h1>
+                    <p class="lead mt-3">
+                        Timely mental health support for underserved communities—care in your language, on your terms.
+                    </p>
+                    <div class="hero-ctas mt-4 d-flex flex-wrap gap-3">
+                        <a class="btn btn-hero" href="/get-started">Start your journey</a>
+                        <a class="btn btn-outline-hero" href="#features">Explore features</a>
+                    </div>
+                    <div class="trust-badges mt-4">
+                        <span class="badge bg-white-soft"><i class="bi bi-shield-lock"></i> Private & secure</span>
+                        <span class="badge bg-white-soft"><i class="bi bi-globe2"></i> Multilingual</span>
+                        <span class="badge bg-white-soft"><i class="bi bi-clock-history"></i> 24/7</span>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card h-100">
-                        <div class="feature-icon mb-4">💰</div>
-                        <h3 class="h4 fw-semibold mb-3">Affordable Care</h3>
-                        <p class="text-muted mb-0">Sliding scale fees and free crisis support for all.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card h-100">
-                        <div class="feature-icon mb-4">🕐</div>
-                        <h3 class="h4 fw-semibold mb-3">24/7 Availability</h3>
-                        <p class="text-muted mb-0">Support when you need it, day or night.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card h-100">
-                        <div class="feature-icon mb-4">🔒</div>
-                        <h3 class="h4 fw-semibold mb-3">Complete Privacy</h3>
-                        <p class="text-muted mb-0">Your conversations stay confidential and secure.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card h-100">
-                        <div class="feature-icon mb-4">📱</div>
-                        <h3 class="h4 fw-semibold mb-3">Mobile First</h3>
-                        <p class="text-muted mb-0">Access help from anywhere, on any device.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card h-100">
-                        <div class="feature-icon mb-4">❤️</div>
-                        <h3 class="h4 fw-semibold mb-3">Community Driven</h3>
-                        <p class="text-muted mb-0">Built by and for underserved communities.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="section-padding" style="background: linear-gradient(135deg, #f8f9ff 0%, #e9f1ff 100%);">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center mb-5">
-                    <h2 class="section-title">How It Works</h2>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="step-card h-100">
-                        <div class="step-number">1</div>
-                        <h3 class="h4 fw-semibold mb-3">Quick Sign Up</h3>
-                        <p class="text-muted mb-0">2-minute registration. No long forms required.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="step-card h-100">
-                        <div class="step-number">2</div>
-                        <h3 class="h4 fw-semibold mb-3">Match Instantly</h3>
-                        <p class="text-muted mb-0">Get connected with a culturally-aware counselor.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="step-card h-100">
-                        <div class="step-number">3</div>
-                        <h3 class="h4 fw-semibold mb-3">Start Healing</h3>
-                        <p class="text-muted mb-0">Begin your journey to better mental health today.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding bg-white">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center mb-5">
-                    <h2 class="section-title">Our Services</h2>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card h-100">
-                        <i class="bi bi-chat-dots service-icon mb-4 d-block"></i>
-                        <h3 class="h5 fw-semibold mb-3">Live Chat</h3>
-                        <p class="mb-0 opacity-90">Immediate text support from trained counselors</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card h-100">
-                        <i class="bi bi-telephone service-icon mb-4 d-block"></i>
-                        <h3 class="h5 fw-semibold mb-3">Phone Counseling</h3>
-                        <p class="mb-0 opacity-90">Voice support for when you need to talk</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card h-100">
-                        <i class="bi bi-heart-fill service-icon mb-4 d-block"></i>
-                        <h3 class="h5 fw-semibold mb-3">Crisis Intervention</h3>
-                        <p class="mb-0 opacity-90">24/7 emergency support, no questions asked</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-card h-100">
-                        <i class="bi bi-people-fill service-icon mb-4 d-block"></i>
-                        <h3 class="h5 fw-semibold mb-3">Group Support</h3>
-                        <p class="mb-0 opacity-90">Connect with others facing similar challenges</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center mb-5">
-                    <h2 class="section-title">Real Stories, Real Healing</h2>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="testimonial-card h-100 pt-5">
-                        <div class="stars mb-4">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <div class="col-lg-5">
+                    <div class="hero-card glass-card">
+                        <div class="hero-card__header">
+                            <i class="bi bi-chat-heart hero-card__icon"></i>
+                            <span class="hero-card__title">You’re not alone</span>
                         </div>
-                        <p class="mb-4 fs-6">"Finally found someone who understands my culture and background. This service saved me during my darkest moments."</p>
-                        <div class="fw-semibold text-dark fs-6">Maria G.<br><span class="text-muted fw-normal">Community Member</span></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="testimonial-card h-100 pt-5">
-                        <div class="stars mb-4">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        <p class="hero-card__text">
+                            “I felt heard, without judgment. Having support in my language changed everything.”
+                        </p>
+                        <div class="hero-card__footer">
+                            <div class="avatar"><span>MG</span></div>
+                            <div>
+                                <div class="fw-semibold">Maria</div>
+                                <div class="text-muted small">Community Member</div>
+                            </div>
+                            <div class="ms-auto stars">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
                         </div>
-                        <p class="mb-4 fs-6">"The counselors speak my language literally and figuratively. I feel heard and understood for the first time."</p>
-                        <div class="fw-semibold text-dark fs-6">Ahmed K.<br><span class="text-muted fw-normal">Recent User</span></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="testimonial-card h-100 pt-5">
-                        <div class="stars mb-4">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        </div>
-                        <p class="mb-4 fs-6">"Accessible, affordable, and available when I needed it most. This is mental health care done right."</p>
-                        <div class="fw-semibold text-dark fs-6">Sarah L.<br><span class="text-muted fw-normal">Long-term User</span></div>
                     </div>
                 </div>
             </div>
+
+            <!-- Decorative background shapes -->
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
         </div>
     </section>
 
-    <section class="final-cta">
+    <main id="main">
+        <!-- Features -->
+        <section id="features" class="section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Why choose MindHaven?</h2>
+                    <p class="section-subtitle">Designed for access, dignity, and culturally aware care.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4">
+                        <article class="feature-card">
+                            <div class="feature-icon gradient-text">🌍</div>
+                            <h3 class="h5">Multilingual support</h3>
+                            <p>Counselors who speak your language and understand your culture.</p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="feature-card">
+                            <div class="feature-icon gradient-text">💰</div>
+                            <h3 class="h5">Affordable care</h3>
+                            <p>Sliding scale fees and free crisis support for all.</p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="feature-card">
+                            <div class="feature-icon gradient-text">🕐</div>
+                            <h3 class="h5">24/7 availability</h3>
+                            <p>Support when you need it—day or night.</p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="feature-card">
+                            <div class="feature-icon gradient-text">🔒</div>
+                            <h3 class="h5">Complete privacy</h3>
+                            <p>Your conversations stay confidential and secure.</p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="feature-card">
+                            <div class="feature-icon gradient-text">📱</div>
+                            <h3 class="h5">Mobile-first</h3>
+                            <p>Access help from anywhere, on any device.</p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="feature-card">
+                            <div class="feature-icon gradient-text">❤️</div>
+                            <h3 class="h5">Community-driven</h3>
+                            <p>Built by and for underserved communities.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="section section-alt">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">How it works</h2>
+                    <p class="section-subtitle">Three steps, zero judgment.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="h6">Quick sign up</h3>
+                            <p>Two-minute registration. No long forms required.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="h6">Match instantly</h3>
+                            <p>Get connected with a culturally aware counselor.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="h6">Start healing</h3>
+                            <p>Begin your journey to better mental health today.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Our services</h2>
+                    <p class="section-subtitle">Multiple ways to get support—choose what feels right.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="service-card service-gradient-1">
+                            <i class="bi bi-chat-dots service-icon"></i>
+                            <h3 class="h6">Live chat</h3>
+                            <p>Immediate text support from trained counselors.</p>
+                            <a class="service-link" href="/chat">Start chat</a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="service-card service-gradient-2">
+                            <i class="bi bi-telephone service-icon"></i>
+                            <h3 class="h6">Phone counseling</h3>
+                            <p>Voice support for when you need to talk.</p>
+                            <a class="service-link" href="/call">Request a call</a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="service-card service-gradient-3">
+                            <i class="bi bi-heart-fill service-icon"></i>
+                            <h3 class="h6">Crisis intervention</h3>
+                            <p>24/7 emergency support, no questions asked.</p>
+                            <a class="service-link" href="/crisis">Get urgent help</a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="service-card service-gradient-4">
+                            <i class="bi bi-people-fill service-icon"></i>
+                            <h3 class="h6">Group support</h3>
+                            <p>Connect with others facing similar challenges.</p>
+                            <a class="service-link" href="/groups">Join a group</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="section section-warm">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Real stories, real healing</h2>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="testimonial-card">
+                            <div class="quote-mark">“</div>
+                            <div class="stars mb-3">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p>Finally found someone who understands my culture and background. This service saved me
+                                during my darkest moments.</p>
+                            <div class="person">
+                                <div class="avatar"><span>MG</span></div>
+                                <div>
+                                    <div class="fw-semibold">Maria G.</div>
+                                    <div class="text-muted small">Community Member</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="testimonial-card">
+                            <div class="quote-mark">“</div>
+                            <div class="stars mb-3">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p>The counselors speak my language—literally and figuratively. I feel heard and understood
+                                for the first time.</p>
+                            <div class="person">
+                                <div class="avatar"><span>AK</span></div>
+                                <div>
+                                    <div class="fw-semibold">Ahmed K.</div>
+                                    <div class="text-muted small">Recent User</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="testimonial-card">
+                            <div class="quote-mark">“</div>
+                            <div class="stars mb-3">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p>Accessible, affordable, and available when I needed it most. This is mental health care
+                                done right.</p>
+                            <div class="person">
+                                <div class="avatar"><span>SL</span></div>
+                                <div>
+                                    <div class="fw-semibold">Sarah L.</div>
+                                    <div class="text-muted small">Long-term User</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta">
+            <div class="container text-center">
+                <h2 class="display-5 fw-light">Your first step starts here</h2>
+                <p class="fs-5">Take the courageous step toward better mental health today.</p>
+                <div class="mt-3">
+                    <a class="btn btn-hero" href="/get-started">Get started now</a>
+                    <a class="btn btn-outline-hero" href="#features">Learn more</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="display-3 fw-light mb-4">Your First Step Starts Here</h2>
-                    <p class="fs-4 mb-5 opacity-95">Take the courageous step toward better mental health today.</p>
-                    <a href="#features" class="btn btn-hero btn-lg">Start Your Journey</a>
+            <div class="row gy-4 align-items-center">
+                <div class="col-md-6">
+                    <div class="footer-brand d-flex align-items-center gap-2">
+                        <span class="brand-logo">🫶</span>
+                        <span class="brand-text"><strong>MindHaven</strong></span>
+                    </div>
+                    <p class="mt-2 text-muted">Care that meets you where you are—private, multilingual, and available.
+                    </p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-md-end gap-3">
+                    <a class="footer-link" href="/privacy">Privacy</a>
+                    <a class="footer-link" href="/terms">Terms</a>
+                    <a class="footer-link" href="/contact">Contact</a>
+                </div>
+            </div>
+            <hr class="footer-divider" />
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">© 2025 MindHaven. All rights reserved.</small>
+                <div class="socials d-flex gap-2">
+                    <a aria-label="Twitter" class="social" href="#"><i class="bi bi-twitter"></i></a>
+                    <a aria-label="Instagram" class="social" href="#"><i class="bi bi-instagram"></i></a>
+                    <a aria-label="LinkedIn" class="social" href="#"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
         </div>
-    </section>
+    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (optional) and app script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>
