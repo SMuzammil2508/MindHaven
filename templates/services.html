@@ -329,16 +329,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find a Therapist - MindHaven</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -351,11 +353,24 @@
         .navbar {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
-        .navbar-brand { font-weight: 700; color: #26a69a !important; font-size: 1.5rem; }
-        .nav-link { color: #555 !important; font-weight: 500; margin-left: 15px; }
-        .nav-link:hover { color: #26a69a !important; }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #26a69a !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover {
+            color: #26a69a !important;
+        }
 
         /* Quiz Styles */
         .quiz-section {
@@ -364,14 +379,32 @@
             padding: 40px;
             box-shadow: 0 10px 30px rgba(38, 166, 154, 0.1);
             margin-bottom: 40px;
-            display: none; 
+            display: none;
             border-top: 5px solid #26a69a;
             animation: slideDown 0.5s ease;
         }
-        @keyframes slideDown { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
 
-        .quiz-question { margin-bottom: 25px; }
-        .quiz-question h6 { font-weight: 700; color: #2c3e50; margin-bottom: 12px; }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question h6 {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
 
         .quiz-option {
             display: block;
@@ -384,18 +417,28 @@
             font-weight: 500;
             color: #555;
         }
-        .quiz-option:hover { background-color: #e0f2f1; border-color: #26a69a; color: #26a69a; }
-        .quiz-option input { margin-right: 12px; transform: scale(1.2); accent-color: #26a69a; }
+
+        .quiz-option:hover {
+            background-color: #e0f2f1;
+            border-color: #26a69a;
+            color: #26a69a;
+        }
+
+        .quiz-option input {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #26a69a;
+        }
 
         /* Therapist Card */
         .card {
             border: none;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             transition: all 0.4s ease;
             height: 100%;
         }
-        
+
         .card.highlight {
             border: 2px solid #26a69a;
             transform: scale(1.03);
@@ -403,33 +446,108 @@
             position: relative;
             z-index: 10;
         }
-        .card.dimmed { opacity: 0.4; filter: grayscale(0.8); transform: scale(0.95); }
+
+        .card.dimmed {
+            opacity: 0.4;
+            filter: grayscale(0.8);
+            transform: scale(0.95);
+        }
 
         .avatar-img {
-            width: 80px; height: 80px; object-fit: cover;
-            border-radius: 50%; border: 3px solid #b2dfdb;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #b2dfdb;
         }
 
         .btn-teal {
-            background-color: #26a69a; color: white; font-weight: 600;
-            border-radius: 50px; padding: 10px 25px; border: none; width: 100%;
+            background-color: #26a69a;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 10px 25px;
+            border: none;
+            width: 100%;
         }
-        .btn-teal:hover { background-color: #4db6ac; color: white; transform: translateY(-2px); }
-        
+
+        .btn-teal:hover {
+            background-color: #4db6ac;
+            color: white;
+            transform: translateY(-2px);
+        }
+
         .btn-outline-teal {
-            border: 2px solid #26a69a; color: #26a69a; font-weight: 600;
-            border-radius: 50px; padding: 10px 25px; background: transparent;
+            border: 2px solid #26a69a;
+            color: #26a69a;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 10px 25px;
+            background: transparent;
         }
-        .btn-outline-teal:hover { background-color: #26a69a; color: white; }
+
+        .btn-outline-teal:hover {
+            background-color: #26a69a;
+            color: white;
+        }
 
         /* Flatpickr & Time Slots */
-        .flatpickr-day.selected { background: #26a69a !important; border-color: #26a69a !important; }
-        #timeSlotsSection { max-height: 0; overflow: hidden; transition: all 0.5s ease; opacity: 0; }
-        #timeSlotsSection.visible { max-height: 300px; opacity: 1; margin-top: 20px; }
-        .time-btn { border: 1px solid #ddd; border-radius: 10px; padding: 10px; text-align: center; cursor: pointer; background: #fff; }
-        .time-btn.selected { background-color: #26a69a; color: white; border-color: #26a69a; }
+        .flatpickr-day.selected {
+            background: #26a69a !important;
+            border-color: #26a69a !important;
+        }
+
+        #timeSlotsSection {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        #timeSlotsSection.visible {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .time-btn {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .time-btn.selected {
+            background-color: #26a69a;
+            color: white;
+            border-color: #26a69a;
+        }
+
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        .goog-te-gadget img {
+            display: none;
+            /* Hide Google branding flag icon */
+        }
+
+        .navbar {
+            padding-top: 50px;
+        }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -441,9 +559,23 @@
             </div>
         </div>
     </nav>
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element"></div>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,bn,hi,ar,fr,es', // Customize this list
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <div class="container" style="margin-top: 100px; margin-bottom: 50px;">
-        
+
         <div class="text-center mb-5">
             <h2 class="fw-bold" style="color:#26a69a;">Connect with a Professional</h2>
             <p class="text-muted mb-4">Not sure who to choose? Let us match you.</p>
@@ -459,47 +591,60 @@
             </div>
 
             <form id="quizForm" onsubmit="calculateMatch(event)">
-                
+
                 <div class="quiz-question">
                     <h6>1. What is the main reason you are seeking help today?</h6>
-                    <label class="quiz-option"><input type="radio" name="issue" value="Anxiety" required> I feel anxious, overwhelmed, or stressed constantly.</label>
-                    <label class="quiz-option"><input type="radio" name="issue" value="Couples Therapy"> My partner and I are having conflict or communication issues.</label>
-                    <label class="quiz-option"><input type="radio" name="issue" value="Child Psychology"> I am concerned about my child's behavior or emotions.</label>
+                    <label class="quiz-option"><input type="radio" name="issue" value="Anxiety" required> I feel
+                        anxious, overwhelmed, or stressed constantly.</label>
+                    <label class="quiz-option"><input type="radio" name="issue" value="Couples Therapy"> My partner and
+                        I are having conflict or communication issues.</label>
+                    <label class="quiz-option"><input type="radio" name="issue" value="Child Psychology"> I am concerned
+                        about my child's behavior or emotions.</label>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 quiz-question">
                         <h6>2. How long have you been feeling this way?</h6>
-                        <label class="quiz-option"><input type="radio" name="duration" value="new" required> Less than a month (It's recent)</label>
-                        <label class="quiz-option"><input type="radio" name="duration" value="chronic"> More than 6 months (It's been a while)</label>
+                        <label class="quiz-option"><input type="radio" name="duration" value="new" required> Less than a
+                            month (It's recent)</label>
+                        <label class="quiz-option"><input type="radio" name="duration" value="chronic"> More than 6
+                            months (It's been a while)</label>
                     </div>
 
                     <div class="col-md-6 quiz-question">
                         <h6>3. How much does this affect your daily life?</h6>
-                        <label class="quiz-option"><input type="radio" name="severity" value="mild" required> I can manage, but it's annoying.</label>
-                        <label class="quiz-option"><input type="radio" name="severity" value="high"> It's hard to focus, work, or sleep.</label>
+                        <label class="quiz-option"><input type="radio" name="severity" value="mild" required> I can
+                            manage, but it's annoying.</label>
+                        <label class="quiz-option"><input type="radio" name="severity" value="high"> It's hard to focus,
+                            work, or sleep.</label>
                     </div>
                 </div>
 
                 <div class="quiz-question">
                     <h6>4. What kind of therapist style do you prefer?</h6>
-                    <label class="quiz-option"><input type="radio" name="style" value="Anxiety" required> Someone gentle who listens (Supportive).</label>
-                    <label class="quiz-option"><input type="radio" name="style" value="Couples Therapy"> Someone direct who gives solutions (Practical).</label>
+                    <label class="quiz-option"><input type="radio" name="style" value="Anxiety" required> Someone gentle
+                        who listens (Supportive).</label>
+                    <label class="quiz-option"><input type="radio" name="style" value="Couples Therapy"> Someone direct
+                        who gives solutions (Practical).</label>
                 </div>
 
                 <div class="quiz-question">
                     <h6>5. What is your primary goal right now?</h6>
-                    <label class="quiz-option"><input type="radio" name="goal" value="Anxiety" required> To find peace and calm my mind.</label>
-                    <label class="quiz-option"><input type="radio" name="goal" value="Couples Therapy"> To fix my relationship dynamics.</label>
-                    <label class="quiz-option"><input type="radio" name="goal" value="Child Psychology"> To help my family/child thrive.</label>
+                    <label class="quiz-option"><input type="radio" name="goal" value="Anxiety" required> To find peace
+                        and calm my mind.</label>
+                    <label class="quiz-option"><input type="radio" name="goal" value="Couples Therapy"> To fix my
+                        relationship dynamics.</label>
+                    <label class="quiz-option"><input type="radio" name="goal" value="Child Psychology"> To help my
+                        family/child thrive.</label>
                 </div>
 
                 <div class="text-end mt-4">
                     <button type="submit" class="btn btn-teal px-5">See My Match</button>
                 </div>
             </form>
-            
-            <div id="quizResultMsg" class="mt-4 p-3 text-center fw-bold bg-light rounded" style="color: #26a69a; display:none;"></div>
+
+            <div id="quizResultMsg" class="mt-4 p-3 text-center fw-bold bg-light rounded"
+                style="color: #26a69a; display:none;"></div>
         </div>
 
         <div class="row g-4" id="therapistGrid">
@@ -516,10 +661,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card-body p-0 text-muted small">
-                        <p class="mb-2"><i class="fas fa-map-marker-alt" style="color:#26a69a; width:20px;"></i> {{ t.location }}</p>
-                        <p class="mb-2"><i class="fas fa-video" style="color:#26a69a; width:20px;"></i> Video & Audio</p>
+                        <p class="mb-2"><i class="fas fa-map-marker-alt" style="color:#26a69a; width:20px;"></i> {{
+                            t.location }}</p>
+                        <p class="mb-2"><i class="fas fa-video" style="color:#26a69a; width:20px;"></i> Video & Audio
+                        </p>
                         <p class="mb-3"><i class="fas fa-tag" style="color:#26a69a; width:20px;"></i> {{ t.price }}</p>
                     </div>
 
@@ -532,9 +679,10 @@
             </div>
             {% endfor %}
         </div>
-        
+
         <div class="text-center mt-4">
-            <button id="resetFilterBtn" class="btn btn-link text-muted" style="display:none; text-decoration:none;" onclick="resetFilters()">Show all therapists</button>
+            <button id="resetFilterBtn" class="btn btn-link text-muted" style="display:none; text-decoration:none;"
+                onclick="resetFilters()">Show all therapists</button>
         </div>
     </div>
 
@@ -546,7 +694,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted mb-4">Scheduling with <strong style="color:#26a69a;" id="modalTherapistName"></strong></p>
+                    <p class="text-muted mb-4">Scheduling with <strong style="color:#26a69a;"
+                            id="modalTherapistName"></strong></p>
                     <form action="/confirm_booking" method="POST">
                         <input type="hidden" id="selectedTherapistId" name="therapist_id">
                         <input type="hidden" id="selectedTime" name="time">
@@ -557,9 +706,15 @@
                         <div id="timeSlotsSection">
                             <label class="form-label small fw-bold text-muted mb-2">Available Slots</label>
                             <div class="row g-2">
-                                <div class="col-4"><div class="time-btn" data-time="09:00 AM" onclick="selectTime(this)">09:00 AM</div></div>
-                                <div class="col-4"><div class="time-btn" data-time="02:00 PM" onclick="selectTime(this)">02:00 PM</div></div>
-                                <div class="col-4"><div class="time-btn" data-time="04:00 PM" onclick="selectTime(this)">04:00 PM</div></div>
+                                <div class="col-4">
+                                    <div class="time-btn" data-time="09:00 AM" onclick="selectTime(this)">09:00 AM</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="time-btn" data-time="02:00 PM" onclick="selectTime(this)">02:00 PM</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="time-btn" data-time="04:00 PM" onclick="selectTime(this)">04:00 PM</div>
+                                </div>
                             </div>
                         </div>
                         <div id="confirmBtnSection" class="d-none mt-3">
@@ -574,7 +729,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-   <script>
+    <script>
         // --- QUIZ LOGIC ---
         function toggleQuiz() {
             const quiz = document.getElementById('quizContainer');
@@ -583,10 +738,10 @@
 
         function calculateMatch(e) {
             e.preventDefault();
-            
+
             // 1. Capture the data BEFORE resetting
             const formData = new FormData(e.target);
-            
+
             // 2. Initialize Scores
             let scores = {
                 "Anxiety": 0,
@@ -632,9 +787,9 @@
             });
 
             // 7. Scroll to results
-            if(matchFound) {
+            if (matchFound) {
                 document.getElementById('resetFilterBtn').style.display = 'inline-block';
-                document.getElementById('therapistGrid').scrollIntoView({behavior: 'smooth'});
+                document.getElementById('therapistGrid').scrollIntoView({ behavior: 'smooth' });
             } else {
                 alert("No exact match found for " + winner + ". Showing all therapists.");
                 resetFilters();
@@ -661,11 +816,11 @@
             document.getElementById('selectedTherapistId').value = id;
             document.getElementById("timeSlotsSection").classList.remove('visible');
             document.getElementById("confirmBtnSection").classList.add('d-none');
-            
-            if(datePickerInstance) datePickerInstance.destroy();
+
+            if (datePickerInstance) datePickerInstance.destroy();
             datePickerInstance = flatpickr("#datePicker", {
                 minDate: "today",
-                onChange: function() { document.getElementById("timeSlotsSection").classList.add('visible'); }
+                onChange: function () { document.getElementById("timeSlotsSection").classList.add('visible'); }
             });
             bookingModal.show();
         }

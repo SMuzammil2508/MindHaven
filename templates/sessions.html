@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,15 @@
 
     <style>
         :root {
-            --primary-color: #4A90E2; /* Calming Blue */
-            --accent-color: #50E3C2; /* Soft Teal */
+            --primary-color: #4A90E2;
+            /* Calming Blue */
+            --accent-color: #50E3C2;
+            /* Soft Teal */
             --bg-color: #F4F7F6;
             --text-dark: #333;
             --text-light: #777;
             --white: #ffffff;
-            --card-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         body {
@@ -30,16 +33,18 @@
         .navbar {
             background-color: var(--white);
             padding: 15px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .navbar .logo {
             font-weight: 600;
             font-size: 1.5rem;
             color: var(--primary-color);
         }
+
         .navbar a {
             text-decoration: none;
             color: var(--text-dark);
@@ -76,6 +81,7 @@
             transition: background 0.3s;
             box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
         }
+
         .btn-book:hover {
             background-color: #357ABD;
         }
@@ -106,8 +112,14 @@
             bottom: 0;
             width: 6px;
         }
-        .status-upcoming { background-color: var(--accent-color); }
-        .status-completed { background-color: #ddd; }
+
+        .status-upcoming {
+            background-color: var(--accent-color);
+        }
+
+        .status-completed {
+            background-color: #ddd;
+        }
 
         /* Date Box */
         .date-box {
@@ -118,6 +130,7 @@
             min-width: 70px;
             margin-right: 25px;
         }
+
         .date-box .day {
             font-size: 1.5rem;
             font-weight: 700;
@@ -125,6 +138,7 @@
             display: block;
             line-height: 1;
         }
+
         .date-box .month {
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -136,15 +150,18 @@
         .session-info {
             flex-grow: 1;
         }
+
         .session-info h3 {
             margin: 0 0 5px 0;
             font-size: 1.2rem;
         }
+
         .session-info p {
             margin: 0;
             color: var(--text-light);
             font-size: 0.9rem;
         }
+
         .therapist-name {
             display: flex;
             align-items: center;
@@ -152,6 +169,7 @@
             font-size: 0.85rem;
             color: #555;
         }
+
         .therapist-name i {
             margin-right: 8px;
             color: var(--primary-color);
@@ -161,6 +179,7 @@
         .session-actions {
             text-align: right;
         }
+
         .btn-join {
             background-color: var(--accent-color);
             color: #0e5a4a;
@@ -171,6 +190,7 @@
             font-size: 0.85rem;
             display: inline-block;
         }
+
         .btn-reschedule {
             color: var(--text-light);
             text-decoration: none;
@@ -178,6 +198,7 @@
             margin-left: 15px;
             transition: color 0.2s;
         }
+
         .btn-reschedule:hover {
             color: var(--primary-color);
         }
@@ -197,11 +218,41 @@
                 flex-direction: column;
                 text-align: center;
             }
-            .date-box { margin: 0 0 15px 0; width: 100%; }
-            .session-actions { margin-top: 20px; text-align: center; }
+
+            .date-box {
+                margin: 0 0 15px 0;
+                width: 100%;
+            }
+
+            .session-actions {
+                margin-top: 20px;
+                text-align: center;
+            }
+        }
+
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        .goog-te-gadget img {
+            display: none;
+            /* Hide Google branding flag icon */
+        }
+
+        .navbar {
+            padding-top: 50px;
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar">
@@ -212,43 +263,57 @@
             <a href="/logout" style="color: #e74c3c;">Logout</a>
         </div>
     </nav>
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element"></div>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,bn,hi,ar,fr,es', // Customize this list
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <div class="container">
-        
+
         <div class="header-section">
             <h1>Your Sessions</h1>
             <a href="/services" class="btn-book"><i class="fas fa-plus"></i> Book New</a>
         </div>
 
         {% if sessions %}
-            {% for session in sessions %}
-            <div class="session-card">
-                <div class="status-strip status-upcoming"></div>
-                <div class="date-box">
-                    <span class="day">{{ session.date_day }}</span>
-                    <span class="month">{{ session.date_month }}</span>
-                </div>
-                <div class="session-info">
-                    <h3>Therapy Session</h3>
-                    <p><i class="far fa-clock"></i> {{ session.time }}</p>
-                    <div class="therapist-name">
-                        <i class="fas fa-user-md"></i> {{ session.therapist_name }}
-                    </div>
-                </div>
-                <div class="session-actions">
-                    <a href="#" class="btn-join">Join Call</a>
-                    <br><br>
-                    <a href="#" class="btn-reschedule">Reschedule</a>
+        {% for session in sessions %}
+        <div class="session-card">
+            <div class="status-strip status-upcoming"></div>
+            <div class="date-box">
+                <span class="day">{{ session.date_day }}</span>
+                <span class="month">{{ session.date_month }}</span>
+            </div>
+            <div class="session-info">
+                <h3>Therapy Session</h3>
+                <p><i class="far fa-clock"></i> {{ session.time }}</p>
+                <div class="therapist-name">
+                    <i class="fas fa-user-md"></i> {{ session.therapist_name }}
                 </div>
             </div>
-            {% endfor %}
-        
+            <div class="session-actions">
+                <a href="#" class="btn-join">Join Call</a>
+                <br><br>
+                <a href="#" class="btn-reschedule">Reschedule</a>
+            </div>
+        </div>
+        {% endfor %}
+
         {% else %}
-            <div class="no-sessions">
-                <i class="fas fa-calendar-alt" style="font-size: 3rem; color: #ddd; margin-bottom: 20px;"></i>
-                <h3>No upcoming sessions.</h3>
-                <p>Book your first session to start your journey.</p>
-            </div>
+        <div class="no-sessions">
+            <i class="fas fa-calendar-alt" style="font-size: 3rem; color: #ddd; margin-bottom: 20px;"></i>
+            <h3>No upcoming sessions.</h3>
+            <p>Book your first session to start your journey.</p>
+        </div>
         {% endif %}
         <h4 style="margin-top: 40px; color: #888;">Past Sessions</h4>
 
@@ -273,4 +338,5 @@
     </div>
 
 </body>
+
 </html>

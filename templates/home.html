@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MindHaven — Mental Health Support for All</title>
 
+
     <!-- Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫶</text></svg>">
@@ -678,6 +679,31 @@
         .shape-3 {
             background: radial-gradient(var(--teal-400), transparent 60%);
         }
+
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        .goog-te-gadget img {
+            display: none;
+            /* Hide Google branding flag icon */
+        }
+
+        .site-header {
+            padding-top: 20px;
+            background: rgba(32, 178, 170, 0.25);
+            /* teal tint */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
     </style>
 </head>
 
@@ -770,6 +796,20 @@
             </div>
         </nav>
     </header>
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element"></div>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,bn,hi,ar,fr,es', // Customize this list
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <!-- Hero -->
     <section class="hero" aria-labelledby="heroTitle">

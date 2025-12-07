@@ -487,6 +487,27 @@
             color: #888;
             font-size: 0.9rem;
         }
+
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        .goog-te-gadget img {
+            display: none;
+            /* Hide Google branding flag icon */
+        }
+
+        .navbar {
+            padding-top: 50px;
+        }
     </style>
 </head>
 
@@ -533,6 +554,20 @@
             </div>
         </div>
     </nav>
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element"></div>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,bn,hi,ar,fr,es', // Customize this list
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
     <!-- HERO -->

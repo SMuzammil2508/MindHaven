@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn About Therapy - MindHaven</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
     <style>
         /* ================= THEME BASE ================= */
         body {
@@ -23,20 +25,59 @@
         .navbar {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
-        .navbar-brand { font-weight: 700; color: #26a69a !important; font-size: 1.5rem; }
-        .nav-link { color: #555 !important; font-weight: 500; margin: 0 10px; transition: color 0.3s; position: relative;}
-        .nav-link:hover { color: #26a69a !important; }
-        .nav-link::after { content: ""; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px; background: #26a69a; transition: width 0.3s ease; }
-        .nav-link:hover::after { width: 100%; }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #26a69a !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #26a69a !important;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #26a69a;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
         /* Buttons */
         .btn-teal {
-            background-color: #26a69a; color: white; font-weight: 600;
-            border-radius: 50px; padding: 10px 30px; border: none; transition: all 0.3s ease;
+            background-color: #26a69a;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 10px 30px;
+            border: none;
+            transition: all 0.3s ease;
         }
-        .btn-teal:hover { background-color: #4db6ac; color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(38, 166, 154, 0.3); }
+
+        .btn-teal:hover {
+            background-color: #4db6ac;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(38, 166, 154, 0.3);
+        }
 
         /* ================= LAYOUT ================= */
         .page-header {
@@ -44,10 +85,20 @@
             padding: 60px 20px;
             text-align: center;
             margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
-        .page-header h1 { font-weight: 700; color: #2c3e50; }
-        .page-header p { font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto; }
+
+        .page-header h1 {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
 
         /* Sidebar Navigation */
         .sticky-sidebar {
@@ -55,6 +106,7 @@
             top: 100px;
             z-index: 10;
         }
+
         .nav-pills .nav-link {
             color: #555;
             background: white;
@@ -66,17 +118,24 @@
             transition: all 0.3s;
             font-weight: 600;
         }
+
         .nav-pills .nav-link:hover {
             background-color: #f0fdfc;
             color: #26a69a;
             transform: translateX(5px);
         }
+
         .nav-pills .nav-link.active {
             background-color: #26a69a !important;
             color: white !important;
             box-shadow: 0 5px 15px rgba(38, 166, 154, 0.3);
         }
-        .nav-pills i { width: 25px; text-align: center; margin-right: 10px; }
+
+        .nav-pills i {
+            width: 25px;
+            text-align: center;
+            margin-right: 10px;
+        }
 
         /* Content Sections */
         .content-section {
@@ -84,9 +143,11 @@
             border-radius: 20px;
             padding: 40px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            scroll-margin-top: 100px; /* Offset for sticky navbar */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            scroll-margin-top: 100px;
+            /* Offset for sticky navbar */
         }
+
         .section-title {
             font-weight: 700;
             color: #26a69a;
@@ -94,38 +155,131 @@
             display: flex;
             align-items: center;
         }
-        .section-title i { margin-right: 15px; background: #e0f2f1; padding: 10px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+
+        .section-title i {
+            margin-right: 15px;
+            background: #e0f2f1;
+            padding: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         /* Typography */
-        h4 { font-weight: 600; color: #2c3e50; margin-top: 25px; margin-bottom: 15px; }
-        p { color: #666; line-height: 1.8; margin-bottom: 20px; }
-        
+        h4 {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
         /* List Styling */
-        .check-list { list-style: none; padding: 0; }
-        .check-list li { margin-bottom: 12px; position: relative; padding-left: 30px; color: #555; }
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
+            color: #555;
+        }
+
         .check-list li::before {
-            content: "\f00c"; font-family: "Font Awesome 5 Free"; font-weight: 900;
-            position: absolute; left: 0; top: 2px; color: #26a69a;
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: #26a69a;
         }
 
         /* Myth vs Fact */
         .myth-box {
-            background: #fff5f5; border-left: 4px solid #ef5350; padding: 15px; margin-bottom: 15px; border-radius: 0 10px 10px 0;
+            background: #fff5f5;
+            border-left: 4px solid #ef5350;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
         }
+
         .fact-box {
-            background: #f0fdfc; border-left: 4px solid #26a69a; padding: 15px; margin-bottom: 25px; border-radius: 0 10px 10px 0;
+            background: #f0fdfc;
+            border-left: 4px solid #26a69a;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 10px 10px 0;
         }
-        .box-label { font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+        .box-label {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
 
         /* Accordion Custom */
-        .accordion-button:not(.collapsed) { background-color: #e0f2f1; color: #26a69a; }
-        .accordion-button:focus { box-shadow: none; border-color: rgba(0,0,0,0.125); }
+        .accordion-button:not(.collapsed) {
+            background-color: #e0f2f1;
+            color: #26a69a;
+        }
 
-        footer { color: #888; font-size: 0.9rem; margin-top: 50px; padding-bottom: 30px; text-align: center; }
-        
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0, 0, 0, 0.125);
+        }
+
+        footer {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 50px;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
-            .sticky-sidebar { position: static; margin-bottom: 30px; }
-            .content-section { padding: 25px; }
+            .sticky-sidebar {
+                position: static;
+                margin-bottom: 30px;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+        }
+
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
+
+        .goog-te-gadget img {
+            display: none;
+            /* Hide Google branding flag icon */
+        }
+
+        .navbar {
+            padding-top: 50px;
         }
     </style>
 </head>
@@ -149,50 +303,65 @@
                     <li class="nav-item"><a class="nav-link" href="/how-it-works">How it Works</a></li>
 
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/services">Book Session</a></li>
-                        <li class="nav-item ms-lg-3">
-                            <a class="nav-link fw-bold" style="color: #26a69a;" href="/profile">
-                                <i class="fas fa-user-circle me-1"></i> 
-                                {{ current_user.name if current_user.name else "Profile" }}
-                            </a>
-                        </li>
-                        <li class="nav-item ms-2">
-                            <a class="btn btn-outline-danger btn-sm rounded-pill px-3" href="/logout">Logout</a>
-                        </li>
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Book Session</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link fw-bold" style="color: #26a69a;" href="/profile">
+                            <i class="fas fa-user-circle me-1"></i>
+                            {{ current_user.name if current_user.name else "Profile" }}
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-outline-danger btn-sm rounded-pill px-3" href="/logout">Logout</a>
+                    </li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
-                        <li class="nav-item ms-lg-3">
-                            <a class="btn btn-teal" href="/get-started">Get Started</a>
-                        </li>
+                    <li class="nav-item"><a class="nav-link" href="/features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-teal" href="/get-started">Get Started</a>
+                    </li>
                     {% endif %}
-                    
+
                 </ul>
             </div>
         </div>
     </nav>
-
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element"></div>
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,bn,hi,ar,fr,es', // Customize this list
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <div class="page-header" style="padding-top: 120px;">
         <div class="container">
             <h1>Demystifying Therapy</h1>
-            <p>Everything you need to know about mental health support, how it works, and how to find the right fit for you.</p>
+            <p>Everything you need to know about mental health support, how it works, and how to find the right fit for
+                you.</p>
         </div>
     </div>
 
     <div class="container">
         <div class="row">
-            
+
             <div class="col-lg-3">
                 <nav id="navbar-example3" class="sticky-sidebar flex-column align-items-stretch">
                     <div class="nav nav-pills flex-column">
-                        <a class="nav-link active" href="#what-is-therapy"><i class="fas fa-question-circle"></i> What is Therapy?</a>
+                        <a class="nav-link active" href="#what-is-therapy"><i class="fas fa-question-circle"></i> What
+                            is Therapy?</a>
                         <a class="nav-link" href="#who-needs-it"><i class="fas fa-user-check"></i> Who Needs It?</a>
                         <a class="nav-link" href="#types-of-therapy"><i class="fas fa-shapes"></i> Types of Therapy</a>
                         <a class="nav-link" href="#how-to-choose"><i class="fas fa-search"></i> How to Choose</a>
                         <a class="nav-link" href="#faq-section"><i class="fas fa-comments"></i> Common FAQs</a>
                     </div>
-                    
+
                     <div class="mt-4 text-center p-4 bg-white rounded-4 shadow-sm">
                         <h6 class="fw-bold text-muted">Ready to begin?</h6>
                         <a href="/services" class="btn btn-teal btn-sm mt-2 w-100">Find a Therapist</a>
@@ -201,14 +370,19 @@
             </div>
 
             <div class="col-lg-9">
-                
+
                 <div id="what-is-therapy" class="content-section">
                     <h2 class="section-title"><i class="fas fa-brain"></i> What is Therapy?</h2>
                     <p>
-                        Psychotherapy, or talk therapy, is a way to help people with a broad variety of mental illnesses and emotional difficulties. But more than that, it is a tool for personal growth. It provides a safe, confidential space to explore your thoughts, feelings, and behaviors with a trained professional.
+                        Psychotherapy, or talk therapy, is a way to help people with a broad variety of mental illnesses
+                        and emotional difficulties. But more than that, it is a tool for personal growth. It provides a
+                        safe, confidential space to explore your thoughts, feelings, and behaviors with a trained
+                        professional.
                     </p>
                     <p>
-                        Think of it like a gym for your mind. You don't go to the gym only when you have a heart attack; you go to stay healthy. Similarly, therapy isn't just for crises—it's for maintaining mental well-being.
+                        Think of it like a gym for your mind. You don't go to the gym only when you have a heart attack;
+                        you go to stay healthy. Similarly, therapy isn't just for crises—it's for maintaining mental
+                        well-being.
                     </p>
 
                     <h4 class="mb-3">Myths vs. Facts</h4>
@@ -220,7 +394,8 @@
                             </div>
                             <div class="fact-box">
                                 <span class="box-label text-teal">Fact</span>
-                                Seeking help is a sign of strength. Therapy is for anyone wanting to improve their life, relationships, or mental health.
+                                Seeking help is a sign of strength. Therapy is for anyone wanting to improve their life,
+                                relationships, or mental health.
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -230,7 +405,8 @@
                             </div>
                             <div class="fact-box">
                                 <span class="box-label text-teal">Fact</span>
-                                Therapists act as guides. They help you uncover your own answers and develop tools to solve problems yourself.
+                                Therapists act as guides. They help you uncover your own answers and develop tools to
+                                solve problems yourself.
                             </div>
                         </div>
                     </div>
@@ -238,20 +414,24 @@
 
                 <div id="who-needs-it" class="content-section">
                     <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Who Needs Therapy?</h2>
-                    <p>The short answer: <strong>Anyone can benefit.</strong> However, there are signs that indicate professional support might be particularly helpful right now.</p>
-                    
+                    <p>The short answer: <strong>Anyone can benefit.</strong> However, there are signs that indicate
+                        professional support might be particularly helpful right now.</p>
+
                     <h4>Signs you might benefit from support:</h4>
                     <ul class="check-list">
                         <li>You feel overwhelmed, helpless, or sad for prolonged periods.</li>
-                        <li>Your problems don't seem to get better despite your efforts and help from family and friends.</li>
+                        <li>Your problems don't seem to get better despite your efforts and help from family and
+                            friends.</li>
                         <li>You find it difficult to concentrate on work assignments or everyday activities.</li>
                         <li>You worry excessively, expect the worst, or are constantly on edge.</li>
-                        <li>Your actions, such as drinking too much alcohol, using drugs, or being aggressive, are harming you or others.</li>
+                        <li>Your actions, such as drinking too much alcohol, using drugs, or being aggressive, are
+                            harming you or others.</li>
                         <li>You are going through a major life transition (breakup, new job, loss of a loved one).</li>
                     </ul>
-                    
+
                     <div class="alert alert-info border-0 rounded-3 mt-4">
-                        <i class="fas fa-info-circle me-2"></i> <strong>Note:</strong> You don't need a "diagnosis" to see a therapist. Wanting to understand yourself better is a valid enough reason.
+                        <i class="fas fa-info-circle me-2"></i> <strong>Note:</strong> You don't need a "diagnosis" to
+                        see a therapist. Wanting to understand yourself better is a valid enough reason.
                     </div>
                 </div>
 
@@ -262,37 +442,43 @@
                     <div class="accordion" id="therapyTypes">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#type1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#type1">
                                     Cognitive Behavioral Therapy (CBT)
                                 </button>
                             </h2>
                             <div id="type1" class="accordion-collapse collapse show" data-bs-parent="#therapyTypes">
                                 <div class="accordion-body small">
-                                    Focuses on identifying and changing negative thought patterns and behaviors. It is very practical and goal-oriented, often used for anxiety and depression.
+                                    Focuses on identifying and changing negative thought patterns and behaviors. It is
+                                    very practical and goal-oriented, often used for anxiety and depression.
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#type2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#type2">
                                     Psychodynamic Therapy
                                 </button>
                             </h2>
                             <div id="type2" class="accordion-collapse collapse" data-bs-parent="#therapyTypes">
                                 <div class="accordion-body small">
-                                    Focuses on unconscious processes and how past experiences (often from childhood) influence current behavior. Great for deep self-exploration.
+                                    Focuses on unconscious processes and how past experiences (often from childhood)
+                                    influence current behavior. Great for deep self-exploration.
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#type3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#type3">
                                     Humanistic / Client-Centered
                                 </button>
                             </h2>
                             <div id="type3" class="accordion-collapse collapse" data-bs-parent="#therapyTypes">
                                 <div class="accordion-body small">
-                                    Emphasizes empathy and a non-judgmental environment. The therapist supports you in finding your own path to self-actualization.
+                                    Emphasizes empathy and a non-judgmental environment. The therapist supports you in
+                                    finding your own path to self-actualization.
                                 </div>
                             </div>
                         </div>
@@ -301,52 +487,60 @@
 
                 <div id="how-to-choose" class="content-section">
                     <h2 class="section-title"><i class="fas fa-search-plus"></i> How to Choose a Therapist</h2>
-                    <p>Finding the right therapist is like dating—the "fit" matters more than the credentials on paper.</p>
-                    
+                    <p>Finding the right therapist is like dating—the "fit" matters more than the credentials on paper.
+                    </p>
+
                     <h4>Questions to ask yourself:</h4>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="p-3 border rounded-3 h-100 bg-light">
                                 <strong>1. Do I feel safe?</strong>
-                                <p class="small m-0 text-muted">Can I be honest with this person without fear of judgment?</p>
+                                <p class="small m-0 text-muted">Can I be honest with this person without fear of
+                                    judgment?</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="p-3 border rounded-3 h-100 bg-light">
                                 <strong>2. Do they understand me?</strong>
-                                <p class="small m-0 text-muted">Do they get my cultural background, identity, or specific struggle?</p>
+                                <p class="small m-0 text-muted">Do they get my cultural background, identity, or
+                                    specific struggle?</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="p-3 border rounded-3 h-100 bg-light">
                                 <strong>3. Is the logistics right?</strong>
-                                <p class="small m-0 text-muted">Does their availability, price, and online/offline mode work for me?</p>
+                                <p class="small m-0 text-muted">Does their availability, price, and online/offline mode
+                                    work for me?</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="p-3 border rounded-3 h-100 bg-light">
                                 <strong>4. Do they have a plan?</strong>
-                                <p class="small m-0 text-muted">Do they explain how they intend to help you reach your goals?</p>
+                                <p class="small m-0 text-muted">Do they explain how they intend to help you reach your
+                                    goals?</p>
                             </div>
                         </div>
                     </div>
-                    
+
                     <p class="mt-4">
-                        If you don't click with the first therapist you meet, <strong>it’s okay to switch</strong>. A good therapist will understand and even help you find a better match.
+                        If you don't click with the first therapist you meet, <strong>it’s okay to switch</strong>. A
+                        good therapist will understand and even help you find a better match.
                     </p>
                 </div>
 
                 <div id="faq-section" class="content-section mb-5">
                     <h2 class="section-title"><i class="fas fa-comments"></i> Quick FAQs</h2>
-                    
+
                     <div class="mb-3">
                         <h5 class="fw-bold text-dark">How long does it take?</h5>
-                        <p class="small">It depends. Some people feel better after 6-10 sessions of focused CBT. Others prefer long-term support for a year or more. You decide the pace.</p>
+                        <p class="small">It depends. Some people feel better after 6-10 sessions of focused CBT. Others
+                            prefer long-term support for a year or more. You decide the pace.</p>
                     </div>
-                    
+
                     <div class="mb-3">
                         <h5 class="fw-bold text-dark">Is it confidential?</h5>
-                        <p class="small">Absolutely. Ethics and laws prevent therapists from sharing what you say, except in extreme cases where there is an immediate risk of harm to yourself or others.</p>
+                        <p class="small">Absolutely. Ethics and laws prevent therapists from sharing what you say,
+                            except in extreme cases where there is an immediate risk of harm to yourself or others.</p>
                     </div>
                 </div>
 
@@ -361,4 +555,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
